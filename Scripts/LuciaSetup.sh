@@ -32,4 +32,4 @@ CREATE TABLE user_session (
 );
 "
 
-echo "Database setup complete."
+echo "Lucia database setup complete."
