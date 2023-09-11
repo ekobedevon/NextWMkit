@@ -7,10 +7,10 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: example
+      POSTGRES_USER: "${PG_USER}"
+      POSTGRES_PASSWORD: "${PG_PASSWORD}"
     volumes:
     - ./pgdata:/var/lib/postgresql/data
+    - ./Scripts:/docker-entrypoint-initdb.d
     ports:
-      - "5433:5432"
-
-  
+      - "5432:5432"
