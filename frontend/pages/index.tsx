@@ -1,6 +1,7 @@
 // pages/index.tsx
 import { auth } from '@/auth/lucia'
 import { useRouter } from 'next/router'
+import redirectToLogin from '../utils/redirectToLogin'
 
 import type {
     GetServerSidePropsContext,
@@ -9,30 +10,23 @@ import type {
 } from 'next'
 
 export const getServerSideProps = async (
-    context: GetServerSidePropsContext
+    ctx: GetServerSidePropsContext
 ): Promise<
     GetServerSidePropsResult<{
         userId: string
         username: string
     }>
-> => {
-    const authRequest = auth.handleRequest(context)
-    const session = await authRequest.validate()
-    if (!session) {
+> =>
+    redirectToLogin(ctx, async (ctx) => {
+        const authRequest = auth.handleRequest(ctx)
+        const session = await authRequest.validate()
         return {
-            redirect: {
-                destination: '/auth/login',
-                permanent: false,
+            props: {
+                userId: session.user.userId,
+                username: session.user.username,
             },
         }
-    }
-    return {
-        props: {
-            userId: session.user.userId,
-            username: session.user.username,
-        },
-    }
-}
+    })
 
 const Page = (
     props: InferGetServerSidePropsType<typeof getServerSideProps>
