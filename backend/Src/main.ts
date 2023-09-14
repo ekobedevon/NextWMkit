@@ -9,6 +9,15 @@ import { auth } from '../auth/lucia.js'
 const port = 8080
 app.use(express.json()) // for application/json
 
+const authCheck = async (req, res, next) => {
+    const authRequest = auth.handleRequest(req, res)
+    const session = await authRequest.validate()
+    if (!session) {
+        res.sendStatus(401)
+    } else {
+        next()
+    }
+}
 const corsOptions = {
     origin: 'http://localhost:3000', // Replace with the allowed origin
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -18,6 +27,7 @@ const corsOptions = {
 // Use the imported route in your Express app
 // app.use('/test', testRouter);
 app.use(cors(corsOptions))
+app.use(authCheck)
 
 app.get('/', async (req, res) => {
     const authRequest = auth.handleRequest(req, res)
