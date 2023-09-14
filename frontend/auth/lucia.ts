@@ -11,11 +11,12 @@ export const auth = lucia({
     }),
     env: process.env.NODE_ENV === "development" ? "DEV" : "PROD", // "PROD" if deployed to HTTPS
     middleware: nextjs(),
-    getUserAttributes: (data) => {
+    getUserAttributes: (data:any) => {
         return {
             username: data.username,
         }
     },
+	csrfProtection:{allowedSubdomains:"*"}
 })
 
 export type Auth = typeof auth

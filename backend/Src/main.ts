@@ -7,9 +7,10 @@ import { auth } from '../auth/lucia.js'
 // import testRouter from './test'; // Import your route file
 
 const port = 8080
+app.use(express.json()) // for application/json
 
 const corsOptions = {
-    origin: '*', // Replace with the allowed origin
+    origin: 'http://localhost:3000', // Replace with the allowed origin
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // Enable cookies and credentials
     optionsSuccessStatus: 204, // No content response for preflight requests
@@ -22,9 +23,9 @@ app.get('/', async (req, res) => {
     const authRequest = auth.handleRequest(req, res)
     const session = await authRequest.validate()
     if (!session) {
-        res.send('Hello Worlds!')
+        res.send({ text: 'Hello Worlds!' })
     } else {
-        res.send(session.user.username)
+        res.send({ text: 'YO' })
     }
 })
 
