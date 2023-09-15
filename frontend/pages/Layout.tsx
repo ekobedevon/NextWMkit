@@ -1,4 +1,4 @@
-import { Children, Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
     Bars3Icon,
@@ -13,7 +13,6 @@ import {
     XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { useRouter } from 'next/router'
 
 const navigation = [
     { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
@@ -46,10 +45,9 @@ interface SidebarProps {
     children: React.ReactNode
 }
 
-
 const NavOptions = () => {
-	const Teams = () =>{
-		return (
+    const Teams = () => {
+        return (
             <li>
                 <div className="text-xs font-semibold leading-6 text-blue-200">
                     Your teams
@@ -76,8 +74,7 @@ const NavOptions = () => {
                 </ul>
             </li>
         )
-	}
-
+    }
 
     return (
         <nav className="flex flex-1 flex-col">
@@ -127,8 +124,7 @@ const NavOptions = () => {
     )
 }
 
-const Layout:React.FC<SidebarProps> =({ children }) => {
-	
+const Layout: React.FC<SidebarProps> = ({ children }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
     return (
@@ -199,7 +195,7 @@ const Layout:React.FC<SidebarProps> =({ children }) => {
                                                 alt="Your Company"
                                             />
                                         </div>
-                                        <NavOptions/>
+                                        <NavOptions />
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
@@ -218,7 +214,7 @@ const Layout:React.FC<SidebarProps> =({ children }) => {
                                 alt="Your Company"
                             />
                         </div>
-						<NavOptions/>
+                        <NavOptions />
                     </div>
                 </div>
 
@@ -342,15 +338,12 @@ const Layout:React.FC<SidebarProps> =({ children }) => {
                     </div>
 
                     <main className="py-10">
-                        <div className="px-4 sm:px-6 lg:px-8">
-                            {children}
-                        </div>
+                        <div className="px-4 sm:px-6 lg:px-8">{children}</div>
                     </main>
                 </div>
             </div>
         </>
     )
 }
-
 
 export default Layout
