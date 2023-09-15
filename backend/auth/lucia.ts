@@ -13,7 +13,11 @@ export const auth = lucia({
     }),
     env: 'DEV', // "PROD" if deployed to HTTPS
     middleware: express(),
-	
+    getUserAttributes: (data: any) => {
+        return {
+            username: data.username,
+        }
+    },
 })
 
 export type Auth = typeof auth

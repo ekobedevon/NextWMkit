@@ -1,6 +1,7 @@
 {
   "dependencies": { "@lucia-auth/adapter-postgresql": "^2.0.1", "@types/express": "^4.17.17", "ckey": "^1.0.3", "cors": "^2.8.5", "drizzle-orm": "^0.28.6", "express": "^4.18.2", "lucia": "^2.5.0", "postgres": "^3.3.5" },
   "devDependencies": {
+    "@types/cors": "^2.8.14",
     "drizzle-kit": "^0.19.13"
   }
 }
