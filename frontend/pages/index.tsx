@@ -8,6 +8,7 @@ import type {
     GetServerSidePropsResult,
     InferGetServerSidePropsType,
 } from 'next'
+import { useState } from 'react'
 
 export const getServerSideProps = async (
     ctx: GetServerSidePropsContext
@@ -31,14 +32,13 @@ export const getServerSideProps = async (
 const Page = (
     props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
+    const [time, setTime] = useState<Date>()
 
-	const testCall = async () => {
-		const response = await fetch('http://localhost:8080/',{
-			credentials: "include"
-		})
-		const data =  await response.json();
-		console.log(data)
-	}
+    const testCall = async () => {
+        const newDate = new Date()
+        console.log(newDate.toDateString)
+        setTime(newDate)
+    }
 
     const router = useRouter()
     return (
@@ -72,9 +72,14 @@ const Page = (
                 >
                     <input type="submit" value="Sign out" />
                 </form>
-				<button className='w-fit p-2 border-2 border-black rounded-lg active:bg-black active:text-white' onClick={testCall}>CLICK ME</button>
+                <button
+                    className="w-fit p-2 border-2 border-black rounded-lg active:bg-black active:text-white"
+                    onClick={testCall}
+                >
+                    CLICK ME
+                </button>
+                <p>{time?.toLocaleTimeString() || 'Click'}</p>
             </div>
-
         </>
     )
 }
