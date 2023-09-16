@@ -1,9 +1,8 @@
 // pages/index.tsx
 import { auth } from '@/auth/lucia'
 import { useRouter } from 'next/router'
-import redirectToLogin,{authCtx} from '@/utils/redirectToLogin'
+import redirectToLogin, { authCtx } from '@/utils/redirectToLogin'
 import UserIcon from '@/components/svg/userIcon'
-
 
 import type {
     GetServerSidePropsContext,
@@ -22,8 +21,6 @@ export const getServerSideProps = async (
     }>
 > =>
     redirectToLogin(ctx, async (ctx) => {
-        // const authRequest = auth.handleRequest(ctx)
-        // const session = await authRequest.validate()
         return {
             props: {
                 username: ctx.username,
@@ -42,15 +39,11 @@ const Page = (
         console.log(newDate.toDateString)
         setTime(newDate)
     }
-	console.log(props)
+    console.log(props)
 
-    
     return (
         <Layout data={props}>
-            <div className="flex border-2 w-full h-full border-black">
-                {props.username}
-                <UserIcon Icon={props.icon} />
-            </div>
+            <div className="w-64 h-8  border-2 rounded-md drop-shadow-lg"></div>
         </Layout>
     )
 }

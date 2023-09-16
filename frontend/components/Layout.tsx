@@ -35,7 +35,6 @@ const teams = [
     { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
 ]
 
-
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
@@ -112,14 +111,14 @@ const NavOptions = () => {
                 </li>
                 <li className="mt-auto">
                     <a
-                        href="#"
+                        href="/profile"
                         className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-blue-200 hover:bg-blue-700 hover:text-white"
                     >
                         <Cog6ToothIcon
                             className="h-6 w-6 shrink-0 text-blue-200 group-hover:text-white"
                             aria-hidden="true"
                         />
-                        Settings
+                        User Settings
                     </a>
                 </li>
             </ul>
@@ -148,7 +147,9 @@ const SignOut = (router: NextRouter) => {
                     <button
                         value="Sign out"
                         className=" w-full text-left block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50"
-                    >Sign Out</button>
+                    >
+                        Sign Out
+                    </button>
                 </form>
             </Menu.Item>
         </>
@@ -161,7 +162,7 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
 
     return (
         <>
-            <div>
+            <div className="flex flex-col h-screen">
                 <Transition.Root show={sidebarOpen} as={Fragment}>
                     <Dialog
                         as="div"
@@ -234,7 +235,6 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
                         </div>
                     </Dialog>
                 </Transition.Root>
-
                 {/* Static sidebar for desktop */}
                 <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
                     {/* Sidebar component, swap this element with another sidebar if you like */}
@@ -250,7 +250,7 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
                     </div>
                 </div>
 
-                <div className="lg:pl-72">
+                <div className="lg:pl-72 h-full flex flex-col">
                     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
                         <button
                             type="button"
@@ -357,8 +357,10 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
                         </div>
                     </div>
 
-                    <main className="py-10">
-                        <div className="px-4 sm:px-6 lg:px-8">{children}</div>
+                    <main className="py-10  flex flex-1">
+                        <div className="px-4 sm:px-6 lg:px-8 flex-1 flex  w-full h-full justify-center items-center">
+                            {children}
+                        </div>
                     </main>
                 </div>
             </div>
