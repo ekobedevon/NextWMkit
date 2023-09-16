@@ -1,5 +1,6 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
+import { NextRouter } from 'next/router'
 import {
     Bars3Icon,
     BellIcon,
@@ -13,7 +14,8 @@ import {
     XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-
+import UserIcon from '@/components/svg/userIcon'
+import { useRouter } from 'next/router'
 const navigation = [
     { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
     { name: 'Team', href: '#', icon: UsersIcon, current: false },
@@ -32,10 +34,7 @@ const teams = [
     { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
     { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
 ]
-const userNavigation = [
-    { name: 'Your profile', href: '#' },
-    { name: 'Sign out', href: '#' },
-]
+
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -43,6 +42,10 @@ function classNames(...classes: string[]) {
 
 interface SidebarProps {
     children: React.ReactNode
+    data: {
+        username: string
+        icon: string
+    }
 }
 
 const NavOptions = () => {
@@ -124,8 +127,37 @@ const NavOptions = () => {
     )
 }
 
-const Layout: React.FC<SidebarProps> = ({ children }) => {
+const SignOut = (router: NextRouter) => {
+    return (
+        <>
+            <Menu.Item>
+                <form
+                    method="post"
+                    action="/api/logout"
+                    onSubmit={async (e) => {
+                        e.preventDefault()
+                        const response = await fetch('/api/logout', {
+                            method: 'POST',
+                            redirect: 'manual',
+                        })
+                        if (response.status === 0 || response.ok) {
+                            router.push('/auth/login') // redirect to login page on success
+                        }
+                    }}
+                >
+                    <button
+                        value="Sign out"
+                        className=" w-full text-left block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50"
+                    >Sign Out</button>
+                </form>
+            </Menu.Item>
+        </>
+    )
+}
+
+const Layout: React.FC<SidebarProps> = ({ children, data }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
+    const router = useRouter()
 
     return (
         <>
@@ -262,7 +294,7 @@ const Layout: React.FC<SidebarProps> = ({ children }) => {
                             <div className="flex items-center gap-x-4 lg:gap-x-6">
                                 <button
                                     type="button"
-                                    className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
+                                    className="-m-2.5  text-gray-400 hover:text-gray-500"
                                 >
                                     <span className="sr-only">
                                         View notifications
@@ -285,17 +317,21 @@ const Layout: React.FC<SidebarProps> = ({ children }) => {
                                         <span className="sr-only">
                                             Open user menu
                                         </span>
-                                        <img
+                                        {/* <img
                                             className="h-8 w-8 rounded-full bg-gray-50"
                                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                             alt=""
+                                        /> */}
+                                        <UserIcon
+                                            Icon={data.icon}
+                                            className="h-8 w-8 p-[.125rem] rounded-full bg-gray-300  drop-shadow-lg"
                                         />
                                         <span className="hidden lg:flex lg:items-center">
                                             <span
                                                 className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                                                 aria-hidden="true"
                                             >
-                                                Tom Cook
+                                                {data.username}
                                             </span>
                                             <ChevronDownIcon
                                                 className="ml-2 h-5 w-5 text-gray-400"
@@ -313,23 +349,7 @@ const Layout: React.FC<SidebarProps> = ({ children }) => {
                                         leaveTo="transform opacity-0 scale-95"
                                     >
                                         <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                                            {userNavigation.map((item) => (
-                                                <Menu.Item key={item.name}>
-                                                    {({ active }) => (
-                                                        <a
-                                                            href={item.href}
-                                                            className={classNames(
-                                                                active
-                                                                    ? 'bg-gray-50'
-                                                                    : '',
-                                                                'block px-3 py-1 text-sm leading-6 text-gray-900'
-                                                            )}
-                                                        >
-                                                            {item.name}
-                                                        </a>
-                                                    )}
-                                                </Menu.Item>
-                                            ))}
+                                            <SignOut {...router} />
                                         </Menu.Items>
                                     </Transition>
                                 </Menu>

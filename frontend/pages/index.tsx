@@ -1,30 +1,27 @@
 // pages/index.tsx
-import { auth } from '@/auth/lucia'
 import { useRouter } from 'next/router'
-import redirectToLogin from '../utils/redirectToLogin'
+import redirectToLogin,{authCtx} from '@/utils/redirectToLogin'
 
 import type {
-    GetServerSidePropsContext,
     GetServerSidePropsResult,
     InferGetServerSidePropsType,
 } from 'next'
 import { useState } from 'react'
+import Layout from '../components/Layout'
 
 export const getServerSideProps = async (
-    ctx: GetServerSidePropsContext
+    ctx: authCtx
 ): Promise<
     GetServerSidePropsResult<{
-        userId: string
         username: string
+        icon: string
     }>
 > =>
     redirectToLogin(ctx, async (ctx) => {
-        const authRequest = auth.handleRequest(ctx)
-        const session = await authRequest.validate()
         return {
             props: {
-                userId: session.user.userId,
-                username: session.user.username,
+                username: ctx.username,
+                icon: ctx.icon,
             },
         }
     })
@@ -42,13 +39,13 @@ const Page = (
 
     const router = useRouter()
     return (
-        <>
+        <Layout data={props}>
             <div className="flex flex-col gap-2">
                 <div className="flex flex-col gap-2 ">
                     <h1 className="font-bold text-">Profile</h1>
                     <p>
-                        <span className="font-bold">User id: </span>{' '}
-                        {props.userId}
+                        <span className="font-bold">User icon: </span>{' '}
+                        {props.icon}
                     </p>
                     <p>
                         <span className="font-bold">Username: </span>
@@ -80,7 +77,7 @@ const Page = (
                 </button>
                 <p>{time?.toLocaleTimeString() || 'Click'}</p>
             </div>
-        </>
+        </Layout>
     )
 }
 

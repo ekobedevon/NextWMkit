@@ -2,8 +2,7 @@
 import { useRouter } from 'next/router'
 import { auth } from '@/auth/lucia'
 import Link from 'next/link'
-import Login from '@/components/auth/login'
-import Logo from '@/components/Logo/logo'
+import Logo from '@/components/svg/logo'
 
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 
