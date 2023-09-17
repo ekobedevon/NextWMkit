@@ -317,11 +317,7 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
                                         <span className="sr-only">
                                             Open user menu
                                         </span>
-                                        {/* <img
-                                            className="h-8 w-8 rounded-full bg-gray-50"
-                                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                            alt=""
-                                        /> */}
+                                        
                                         <UserIcon
                                             Icon={data.icon}
                                             className="h-8 w-8 p-[.125rem] rounded-full bg-gray-300  drop-shadow-lg"
@@ -358,7 +354,7 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
                     </div>
 
                     <main className="py-10  flex flex-1">
-                        <div className="px-4 sm:px-6 lg:px-8 flex-1 flex  w-full h-full justify-center items-center">
+                        <div className="px-2 sm:px-6 lg:px-8 flex-1 flex  w-full h-full justify-center items-center">
                             {children}
                         </div>
                     </main>
