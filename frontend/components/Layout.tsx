@@ -13,6 +13,7 @@ import {
     UsersIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
+import Link from 'next/link'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import UserIcon from '@/components/svg/userIcon'
 import { useRouter } from 'next/router'
@@ -57,7 +58,7 @@ const NavOptions = () => {
                 <ul role="list" className="-mx-2 mt-2 space-y-1">
                     {teams.map((team) => (
                         <li key={team.name}>
-                            <a
+                            <Link
                                 href={team.href}
                                 className={classNames(
                                     team.current
@@ -70,7 +71,7 @@ const NavOptions = () => {
                                     {team.initial}
                                 </span>
                                 <span className="truncate">{team.name}</span>
-                            </a>
+                            </Link>
                         </li>
                     ))}
                 </ul>
@@ -85,7 +86,7 @@ const NavOptions = () => {
                     <ul role="list" className="-mx-2 space-y-1">
                         {navigation.map((item) => (
                             <li key={item.name}>
-                                <a
+                                <Link
                                     href={item.href}
                                     className={classNames(
                                         item.current
@@ -104,13 +105,13 @@ const NavOptions = () => {
                                         aria-hidden="true"
                                     />
                                     {item.name}
-                                </a>
+                                </Link>
                             </li>
                         ))}
                     </ul>
                 </li>
                 <li className="mt-auto">
-                    <a
+                    <Link
                         href="/profile"
                         className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-blue-200 hover:bg-blue-700 hover:text-white"
                     >
@@ -119,7 +120,7 @@ const NavOptions = () => {
                             aria-hidden="true"
                         />
                         User Settings
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </nav>
