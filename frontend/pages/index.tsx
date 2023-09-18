@@ -13,14 +13,14 @@ export const getServerSideProps = async (
     ctx: authCtx
 ): Promise<
     GetServerSidePropsResult<{
-        username: string
+        display: string
         icon: string
     }>
 > =>
     redirectToLogin(ctx, async (ctx) => {
         return {
             props: {
-                username: ctx.username,
+                display: ctx.display,
                 icon: ctx.icon,
             },
         }
@@ -48,8 +48,8 @@ const Page = (
                         {props.icon}
                     </p>
                     <p>
-                        <span className="font-bold">Username: </span>
-                        {props.username}
+                        <span className="font-bold">display: </span>
+                        {props.display}
                     </p>
                 </div>
 

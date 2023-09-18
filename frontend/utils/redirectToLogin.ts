@@ -2,7 +2,7 @@ import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import { auth } from '@/auth/lucia'
 
 export interface authCtx extends GetServerSidePropsContext {
-    username: string
+    display: string
     icon: string
 }
 
@@ -23,7 +23,7 @@ const redirectToLogin = async (
     }
 
     // Add the username and icon to the context
-    ctx.username = session.user.username
+    ctx.display = session.user.display
     ctx.icon = session.user.icon
 
     return ssp(ctx)

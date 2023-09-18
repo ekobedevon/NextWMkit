@@ -13,7 +13,7 @@ export const auth = lucia({
     middleware: nextjs_future(),
     getUserAttributes: (data:any) => {
         return {
-            username: data.username,
+            display: data.display,
 			icon:data.icon
         }
     },

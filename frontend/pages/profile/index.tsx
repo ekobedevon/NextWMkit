@@ -16,14 +16,14 @@ export const getServerSideProps = async (
     ctx: authCtx
 ): Promise<
     GetServerSidePropsResult<{
-        username: string
+        display: string
         icon: string
     }>
 > =>
     redirectToLogin(ctx, async (ctx) => {
         return {
             props: {
-                username: ctx.username,
+                display: ctx.display,
                 icon: ctx.icon,
             },
         }
@@ -100,7 +100,6 @@ const Page = (
         console.log(newDate.toDateString)
         setTime(newDate)
     }
-    console.log(props)
 
     useEffect(() => {
         // Check if both newPass and conPass are defined and not empty

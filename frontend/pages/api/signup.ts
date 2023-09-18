@@ -23,15 +23,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 	try {
 		const user = await auth.createUser({
-			key: {
-				providerId: 'username', // auth method
-				providerUserId: username.toLowerCase(), // unique id when using "username" auth method
-				password // hashed by Lucia
-			},
-			attributes: {
-				username
-			}
-		});
+            key: {
+                providerId: 'username', // auth method
+                providerUserId: username.toLowerCase(), // unique id when using "username" auth method
+                password, // hashed by Lucia
+            },
+            attributes: {
+                display: username,
+                icon: 'GiCowled',
+            },
+        })
 		const session = await auth.createSession({
 			userId: user.userId,
 			attributes: {}
