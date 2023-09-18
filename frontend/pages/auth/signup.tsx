@@ -35,8 +35,8 @@ const Page = () => {
                         src="/Compass Logot.svg"
                         alt="Your Company"
                     /> */}
-                    <Logo classname="fill-blue-700 mx-auto h-24 w-auto" />
-                    <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                    <Logo classname="fill-light_primary mx-auto h-24 w-auto" />
+                    <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight ">
                         Create an account
                     </h2>
                 </div>
@@ -71,7 +71,7 @@ const Page = () => {
                         <div>
                             <label
                                 htmlFor="username"
-                                className="block text-sm font-medium leading-6 text-gray-900"
+                                className="block text-sm font-medium leading-6 "
                             >
                                 Username
                             </label>
@@ -81,7 +81,7 @@ const Page = () => {
                                     name="username"
                                     type="text"
                                     required
-                                    className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                                    className="pl-2 block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-light_accent sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
@@ -90,14 +90,14 @@ const Page = () => {
                             <div className="flex items-center justify-between">
                                 <label
                                     htmlFor="password"
-                                    className=" pl-2 block text-sm font-medium leading-6 text-gray-900"
+                                    className=" pl-2 block text-sm font-medium leading-6 "
                                 >
                                     Password
                                 </label>
                                 {/* <div className="text-sm">
                                     <a
                                         href="#"
-                                        className="font-semibold text-blue-600 hover:text-blue-500"
+                                        className="font-semibold text-light_accent hover:text-blue-500"
                                     >
                                         Forgot password?
                                     </a>
@@ -109,7 +109,7 @@ const Page = () => {
                                     name="password"
                                     type="password"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-light_accent sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
@@ -117,18 +117,18 @@ const Page = () => {
                         <div>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-blue-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                                className="flex w-full justify-center rounded-md bg-light_primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light_accent"
                             >
                                 Create Account
                             </button>
                         </div>
                     </form>
 
-                    <p className="mt-10 text-center text-sm text-gray-500">
+                    <p className="mt-10 text-center text-sm text-light_text">
                         Already a member?{' '}
                         <Link
-                            className="hover:text-blue-700"
-                            href="/auth/signup"
+                            className="hover:underline hover:text-light_primary"
+                            href="/auth/login"
                         >
                             Sign in
                         </Link>

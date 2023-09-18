@@ -17,6 +17,7 @@ import Link from 'next/link'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import UserIcon from '@/components/svg/userIcon'
 import { useRouter } from 'next/router'
+import Logo from './svg/logo'
 const navigation = [
     { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
     { name: 'Team', href: '#', icon: UsersIcon, current: false },
@@ -80,7 +81,7 @@ const NavOptions = () => {
     }
 
     return (
-        <nav className="flex flex-1 flex-col">
+        <nav className="flex flex-1 flex-col text-light_background">
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <li>
                     <ul role="list" className="-mx-2 space-y-1">
@@ -90,16 +91,16 @@ const NavOptions = () => {
                                     href={item.href}
                                     className={classNames(
                                         item.current
-                                            ? 'bg-blue-700 text-white'
-                                            : 'text-blue-200 hover:text-white hover:bg-blue-700',
+                                            ? 'bg-light_secondary text-light_text '
+                                            : '  hover:bg-light_accent hover:text-light_background',
                                         'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                     )}
                                 >
                                     <item.icon
                                         className={classNames(
                                             item.current
-                                                ? 'text-white'
-                                                : 'text-blue-200 group-hover:text-white',
+                                                ? ''
+                                                : 'group-hover:text-white',
                                             'h-6 w-6 shrink-0'
                                         )}
                                         aria-hidden="true"
@@ -113,10 +114,10 @@ const NavOptions = () => {
                 <li className="mt-auto">
                     <Link
                         href="/profile"
-                        className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-blue-200 hover:bg-blue-700 hover:text-white"
+                        className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-light_background hover:bg-light_accent hover:text-light_background"
                     >
                         <Cog6ToothIcon
-                            className="h-6 w-6 shrink-0 text-blue-200 group-hover:text-white"
+                            className="h-6 w-6 shrink-0 text-blue-200 group-hover:text-light_background"
                             aria-hidden="true"
                         />
                         User Settings
@@ -154,6 +155,15 @@ const SignOut = (router: NextRouter) => {
                 </form>
             </Menu.Item>
         </>
+    )
+}
+
+const Sidebar = () => {
+    return (
+        <div className="flex grow flex-col gap-y-3 overflow-y-auto bg-light_primary px-6 pb-4">
+            <Logo classname="h-24 mt-4 fill-light_secondary" />
+            <NavOptions />
+        </div>
     )
 }
 
@@ -221,16 +231,7 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
                                         </div>
                                     </Transition.Child>
                                     {/* Sidebar component, swap this element with another sidebar if you like */}
-                                    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-600 px-6 pb-4">
-                                        <div className="flex h-16 shrink-0 items-center">
-                                            <img
-                                                className="h-8 w-auto"
-                                                src="https://tailwindui.com/img/logos/mark.svg?color=white"
-                                                alt="Your Company"
-                                            />
-                                        </div>
-                                        <NavOptions />
-                                    </div>
+                                    <Sidebar />
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
@@ -239,16 +240,7 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
                 {/* Static sidebar for desktop */}
                 <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
                     {/* Sidebar component, swap this element with another sidebar if you like */}
-                    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-600 px-6 pb-4">
-                        <div className="flex h-16 shrink-0 items-center">
-                            <img
-                                className="h-8 w-auto"
-                                src="https://tailwindui.com/img/logos/mark.svg?color=white"
-                                alt="Your Company"
-                            />
-                        </div>
-                        <NavOptions />
-                    </div>
+                    <Sidebar />
                 </div>
 
                 <div className="lg:pl-72 h-full flex flex-col">
@@ -318,10 +310,10 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
                                         <span className="sr-only">
                                             Open user menu
                                         </span>
-                                        
+
                                         <UserIcon
                                             Icon={data.icon}
-                                            className="h-8 w-8 p-[.125rem] rounded-full bg-gray-300  drop-shadow-lg"
+                                            className="text-4xl p-[.125rem] text-light_primary"
                                         />
                                         <span className="hidden lg:flex lg:items-center">
                                             <span
@@ -354,7 +346,7 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
                         </div>
                     </div>
 
-                    <main className="py-10  flex flex-1">
+                    <main className="py-10  flex flex-1 bg-light_background text-light_text">
                         <div className="px-2 sm:px-6 lg:px-8 flex-1 flex  w-full h-full justify-center items-center">
                             {children}
                         </div>

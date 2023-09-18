@@ -36,36 +36,35 @@ interface newCredentials {
 }
 
 const iconList: string[] = [
-    'barbarian.svg',
-    'barbute.svg',
-    'brutal-helm.svg',
-    'cowled.svg',
-    'crowned-skull.svg',
-    'cultist.svg',
-    'diablo-skull.svg',
-    'dracula.svg',
-    'dragon-head.svg',
-    'dwarf-face.svg',
-    'dwarf-helmet.svg',
-    'dwarf-king.svg',
-    'elf-helmet.svg',
-    'executioner.svg',
-    'femaleElf.svg',
-    'fish-monster.svg',
-    'goblin.svg',
-    'golem.svg',
-    'kenku.svg',
-    'monk-face.svg',
-    'nun-face.svg',
-    'ogre.svg',
-    'orc-head.svg',
-    'overlord-helm.svg',
-    'troll.svg',
-    'vampire.svg',
-    'visoredhelm.svg',
-    'warlock.svg',
-    'witch.svg',
-    'wizard.svg',
+    'GiBarbarian',
+    'GiBarbute',
+    'GiBrutalHelm',
+    'GiCowled',
+    'GiCultist',
+    'GiDiabloSkull',
+    'GiVampireDracula',
+    'Gi3DGlasses',
+    'GiDragonHead',
+    'GiDwarfFace',
+    'GiDwarfHelmet',
+    'GiDwarfKing',
+    'GiElfHelmet',
+    'GiExecutionerHood',
+    'GiWomanElfFace',
+    'GiFishMonster',
+    'GiGoblinHead',
+    'GiGolemHead',
+    'GiKenkuHead',
+    'GiMonkFace',
+    'GiNunFace',
+    'GiOgre',
+    'GiOrcHead',
+    'GiOverlordHelm',
+    'GiTroll',
+    'GiRestingVampire',
+    'GiVisoredHelm',
+    'GiWarlockHood',
+    'GiWizardFace',
 ]
 
 interface Action {
@@ -163,7 +162,7 @@ const Page = (
                         <div className=" pb-2">
                             <label
                                 htmlFor="username"
-                                className="text-base font-semibold leading-7 text-gray-900"
+                                className="text-base font-semibold leading-7 "
                             >
                                 Update Username
                             </label>
@@ -174,14 +173,14 @@ const Page = (
                                     onChange={(e) => setNewName(e.target.value)}
                                     type="text"
                                     autoComplete="false"
-                                    className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                                    className="pl-2 block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
                         <div className="flex-1">
                             <label
                                 htmlFor="password"
-                                className="text-base font-semibold leading-7 text-gray-900"
+                                className="text-base font-semibold leading-7 "
                             >
                                 Password
                             </label>
@@ -192,7 +191,7 @@ const Page = (
                                     name="password"
                                     type="password"
                                     autoComplete="false"
-                                    className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                                    className="pl-2 block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
@@ -219,7 +218,7 @@ const Page = (
                             (newPass === '' && conPass === '') ? (
                                 <label
                                     htmlFor="password"
-                                    className="text-base font-semibold leading-7 text-gray-900"
+                                    className="text-base font-semibold leading-7 "
                                 >
                                     Confirm Password
                                 </label>
@@ -231,7 +230,7 @@ const Page = (
                                     name="password"
                                     type="password"
                                     autoComplete="false"
-                                    className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                                    className="pl-2 block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
@@ -240,7 +239,7 @@ const Page = (
                 <div className=" flex justify-center items-center">
                     <button
                         type="submit"
-                        className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        className="rounded-md bg-light_primary px-3 py-2 text-sm font-semibold text-light_background shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light_accent"
                     >
                         Submit Changes
                     </button>
