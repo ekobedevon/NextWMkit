@@ -29,7 +29,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 password, // hashed by Lucia
             },
             attributes: {
-                display: username,
+                display: username.toLowerCase(),
+                user_id: username.toLowerCase(),
                 icon: 'GiCowled',
             },
         })

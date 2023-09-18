@@ -30,7 +30,7 @@ export const getServerSideProps = async (
     })
 
 interface newCredentials {
-    userName: string
+    display: string
     password: string
     confirm: string
 }
@@ -90,9 +90,8 @@ const Page = (
 ) => {
     const [time, setTime] = useState<Date>()
     const router = useRouter()
-    const [newName, setNewName] = useState<string>('')
     const [newPass, setNewPass] = useState<string>('')
-    const [conPass, setConPass] = useState<string>('')
+    const [confPass, setConPass] = useState<string>('')
     const [passMatch, setPassMatch] = useState<boolean | undefined>()
     const [icon, setIcon] = useState<string>(props.icon)
     const testCall = async () => {
@@ -105,12 +104,12 @@ const Page = (
         // Check if both newPass and conPass are defined and not empty
         if (
             newPass !== undefined &&
-            conPass !== undefined &&
+            confPass !== undefined &&
             newPass !== '' &&
-            conPass !== ''
+            confPass !== ''
         ) {
             // Compare newPass and conPass
-            if (newPass === conPass) {
+            if (newPass === confPass) {
                 setPassMatch(true) // Passwords match
             } else {
                 setPassMatch(false) // Passwords don't match
@@ -118,13 +117,13 @@ const Page = (
         } else {
             setPassMatch(undefined) // Either newPass or conPass is undefined or empty
         }
-    }, [newPass, conPass])
+    }, [newPass, confPass])
 
     return (
         <Layout data={props}>
             <form
                 className="px-6 pt-8 pb-4 flex flex-col gap-8 border-2 rounded-md drop-shadow-lg"
-                // action="/api/update" come back to later
+                action="/api/update" // come back to later
                 method="post"
                 onSubmit={async (e) => {
                     e.preventDefault()
@@ -132,8 +131,9 @@ const Page = (
                     const response = await fetch(e.currentTarget.action, {
                         method: 'POST',
                         body: JSON.stringify({
-                            username: formData.get('username'),
-                            password: formData.get('password'),
+                            display: formData.get('display'),
+                            password: newPass,
+                            confPass: confPass,
                         }),
                         headers: {
                             'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ const Page = (
                 }}
             >
                 <div className="flex sm:flex-row flex-col items-center sm:gap-12 gap-4 sm:pl-2">
-                    <div className="flex items-center">
+                    <div className="flex items-center flex-col gap-6">
                         <div className="">
                             <Radio
                                 stateSetter={setIcon}
@@ -156,20 +156,27 @@ const Page = (
                                 srText="Change Icon"
                             />
                         </div>
+                        <div className="flex flex-col items-center">
+                            <p className="text-light_primary font-bold text-3xl">
+                                {props.display}
+                            </p>
+                            <p className="text-light_primary text-xl">
+                                {'Placeholder'}
+                            </p>
+                        </div>
                     </div>
                     <div className="flex flex-col gap-2 sm:gap-6">
                         <div className=" pb-2">
                             <label
-                                htmlFor="username"
+                                htmlFor="display"
                                 className="text-base font-semibold leading-7 "
                             >
-                                Update Username
+                                Update Display Name
                             </label>
                             <div className="mt-2">
                                 <input
-                                    id="username"
-                                    name="username"
-                                    onChange={(e) => setNewName(e.target.value)}
+                                    id="display"
+                                    name="display"
                                     type="text"
                                     autoComplete="false"
                                     className="pl-2 block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent sm:text-sm sm:leading-6"
@@ -214,7 +221,7 @@ const Page = (
                             )}
 
                             {passMatch === undefined ||
-                            (newPass === '' && conPass === '') ? (
+                            (newPass === '' && confPass === '') ? (
                                 <label
                                     htmlFor="password"
                                     className="text-base font-semibold leading-7 "
@@ -226,7 +233,7 @@ const Page = (
                                 <input
                                     onChange={(e) => setConPass(e.target.value)}
                                     id="confPass"
-                                    name="password"
+                                    name="confPass"
                                     type="password"
                                     autoComplete="false"
                                     className="pl-2 block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent sm:text-sm sm:leading-6"

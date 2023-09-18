@@ -5,30 +5,29 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'POST') return res.status(405)
-    const { username, password } = req.body as {
-        username: unknown
-        password: unknown
-        confPass: unknown
-        icon: unknown
+    const { display, password, confPass, icon } = req.body as {
+        display: string
+        password: string
+        confPass: string
+        icon: string
     }
+	
+    let updateDetails = { display: '', password: '', icon: '' }
+
     // basic check
     if (
-        typeof username !== 'string' ||
-        username.length < 1 ||
-        username.length > 31
+        typeof display !== 'string' ||
+        display.length < 1 ||
+        display.length > 31
     ) {
-        return res.status(400).json({
-            error: 'Invalid username',
-        })
+        updateDetails.display = 'Invalid display'
     }
     if (
         typeof password !== 'string' ||
         password.length < 1 ||
         password.length > 255
     ) {
-        return res.status(400).json({
-            error: 'Invalid password',
-        })
+        updateDetails.password = 'Invalid password'
     }
     try {
         const authRequest = auth.handleRequest({
@@ -36,19 +35,37 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             res,
         })
         const session = await authRequest.validate()
-        if (username !== session.user.username) {
+		console.log('display below')
+        console.log(display)
+		console.log(session.user.display)
+		console.log(display !== session.user.display)
+		console.log(display.length > 1 || display.length < 31)
+        if (
+            display !== session.user.display &&
+            (display.length > 1 || display.length < 31)
+        ) {
+            console.log('2')
+            console.log(display)
             const user = await auth.updateUserAttributes(
                 session.user.userId,
                 {
-                    username: username,
+                    display: display,
                 } // expects partial `Lucia.DatabaseUserAttributes`
             )
-			const key = await auth.getKey('username', session.user.username)
-			console.log("HERE")
-			console.log(key)
-			
+            updateDetails.display = 'Updated'
         }
 
+        if (confPass === password) {
+            const newKey = await auth.updateKeyPassword(
+                'username',
+                session.user.user_id.toLowerCase(),
+                password
+            )
+            updateDetails.password = 'Updated'
+            console.log(newKey)
+        } else {
+            updateDetails.password = 'Passwords Mismatch'
+        }
 
         // const key = await auth.updateKeyPassword(
         //     'username',
@@ -75,6 +92,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             // or invalid password
             return res.status(400).json({
                 error: 'Incorrect username or password',
+            })
+        }
+        if (e instanceof LuciaError && e.message === 'AUTH_INVALID_KEY_ID') {
+            return res.status(400).json({
+                error: 'Unexpected DB Error',
             })
         }
         return res.status(500).json({

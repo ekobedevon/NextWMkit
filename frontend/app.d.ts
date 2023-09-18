@@ -4,6 +4,7 @@ declare namespace Lucia {
     type DatabaseUserAttributes = {
         display: string
 		icon: string
+		user_id:string
     }
     type DatabaseSessionAttributes = {}
 }
