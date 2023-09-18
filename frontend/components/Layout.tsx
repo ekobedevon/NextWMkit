@@ -160,7 +160,7 @@ const SignOut = (router: NextRouter) => {
 
 const Sidebar = () => {
     return (
-        <div className="flex grow flex-col gap-y-3 overflow-y-auto bg-light_primary px-6 pb-4">
+        <div className="flex grow flex-col gap-y-3 overflow-y-auto bg-light_primary dark:bg-dark_primary px-6 pb-4">
             <Logo classname="h-24 mt-4 fill-light_secondary" />
             <NavOptions />
         </div>
@@ -173,7 +173,7 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
 
     return (
         <>
-            <div className="flex flex-col h-screen">
+            <div className="flex flex-col h-screen dark">
                 <Transition.Root show={sidebarOpen} as={Fragment}>
                     <Dialog
                         as="div"
@@ -244,10 +244,10 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
                 </div>
 
                 <div className="lg:pl-72 h-full flex flex-col">
-                    <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+                    <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200  dark:border-dark_secondary bg-light_background dark:bg-dark_background text-light_text px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
                         <button
                             type="button"
-                            className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
+                            className="-m-2.5 p-2.5 text-light_text dark:text-dark_text lg:hidden"
                             onClick={() => setSidebarOpen(true)}
                         >
                             <span className="sr-only">Open sidebar</span>
@@ -284,10 +284,10 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
                                     name="search"
                                 />
                             </form> */}
-                            <div className="flex items-center gap-x-4 lg:gap-x-6">
+                            <div className="flex items-center gap-x-4 lg:gap-x-6 text-light_text dark:text-dark_text">
                                 <button
                                     type="button"
-                                    className="-m-2.5  text-gray-400 hover:text-gray-500"
+                                    className="-m-2.5   hover:text-gray-500"
                                 >
                                     <span className="sr-only">
                                         View notifications
@@ -300,12 +300,12 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
 
                                 {/* Separator */}
                                 <div
-                                    className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10"
+                                    className="hidden lg:block lg:h-6 lg:w-px bg-light_text dark:bg-dark_text "
                                     aria-hidden="true"
                                 />
 
                                 {/* Profile dropdown */}
-                                <Menu as="div" className="relative">
+                                <Menu as="div" className="relative ">
                                     <Menu.Button className="-m-1.5 flex items-center p-1.5">
                                         <span className="sr-only">
                                             Open user menu
@@ -313,17 +313,17 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
 
                                         <UserIcon
                                             Icon={data.icon}
-                                            className="text-4xl p-[.125rem] text-light_primary"
+                                            className="text-4xl p-[.125rem]"
                                         />
                                         <span className="hidden lg:flex lg:items-center">
                                             <span
-                                                className="ml-4 text-sm font-semibold leading-6 text-gray-900"
+                                                className="ml-4 text-sm font-semibold leading-6 "
                                                 aria-hidden="true"
                                             >
                                                 {data.display}
                                             </span>
                                             <ChevronDownIcon
-                                                className="ml-2 h-5 w-5 text-gray-400"
+                                                className="ml-2 h-5 w-5"
                                                 aria-hidden="true"
                                             />
                                         </span>
@@ -337,7 +337,7 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
                                         leaveFrom="transform opacity-100 scale-100"
                                         leaveTo="transform opacity-0 scale-95"
                                     >
-                                        <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                                        <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-light_background py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                                             <SignOut {...router} />
                                         </Menu.Items>
                                     </Transition>
@@ -346,7 +346,7 @@ const Layout: React.FC<SidebarProps> = ({ children, data }) => {
                         </div>
                     </div>
 
-                    <main className="py-10  flex flex-1 bg-light_background text-light_text">
+                    <main className="py-10  flex flex-1 bg-light_background dark:bg-dark_background text-light_text">
                         <div className="px-2 sm:px-6 lg:px-8 flex-1 flex  w-full h-full justify-center items-center">
                             {children}
                         </div>

@@ -38,22 +38,23 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		console.log('display below')
         console.log(display)
 		console.log(session.user.display)
-		console.log(display !== session.user.display)
-		console.log(display.length > 1 || display.length < 31)
-        if (
-            display !== session.user.display &&
-            (display.length > 1 || display.length < 31)
-        ) {
-            console.log('2')
-            console.log(display)
-            const user = await auth.updateUserAttributes(
-                session.user.userId,
-                {
-                    display: display,
-                } // expects partial `Lucia.DatabaseUserAttributes`
-            )
-            updateDetails.display = 'Updated'
-        }
+		if (display !== undefined)
+            {
+				if (
+                    display !== session.user.display &&
+                    (display.length > 1 || display.length < 31)
+                ) {
+                    console.log('2')
+                    console.log(display)
+                    const user = await auth.updateUserAttributes(
+                        session.user.userId,
+                        {
+                            display: display,
+                        } // expects partial `Lucia.DatabaseUserAttributes`
+                    )
+                    updateDetails.display = 'Updated'
+                }
+			}
 
         if (confPass === password) {
             const newKey = await auth.updateKeyPassword(
@@ -83,6 +84,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         // authRequest.setSession(newSession)
         return res.redirect(302, '/profile') // profile page
     } catch (e: any) {
+		console.log(e)
         if (
             e instanceof LuciaError &&
             (e.message === 'AUTH_INVALID_KEY_ID' ||
@@ -100,7 +102,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             })
         }
         return res.status(500).json({
-            error: 'An unknown error occurred',
+            error: 'An unknown edrror occurre',
         })
     }
 }

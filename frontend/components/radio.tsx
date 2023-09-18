@@ -36,12 +36,9 @@ export default function SVGModalRadio({
                 <button
                     type="button"
                     onClick={openModal}
-                    className="rounded-md sm:px-3 sm:py-3 text-sm font-medium border-2 text-white hover:ring-4 ring-offset-4 active:bg-blue-600 active:bg-opacity-30  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                    className="rounded-md sm:px-3 sm:py-3 text-sm font-medium border-2 hover:ring-4 ring-offset-4 active:bg-light_accent dark:active:bg-dark_accent active:bg-opacity-30  focus:outline-none focus-visible:ring-2 focus-visible:ring-light_text dark:focus-visible:ring-dark_text focus-visible:ring-opacity-75"
                 >
-                    <UserIcon
-                        Icon={initial}
-                        className="w-auto text-9xl text-light_primary"
-                    />
+                    <UserIcon Icon={initial} className="w-auto text-9xl " />
                     <span className="sr-only">{srText}</span>
                 </button>
             </div>
@@ -60,8 +57,8 @@ export default function SVGModalRadio({
                         <div className="fixed inset-0 bg-black bg-opacity-25" />
                     </Transition.Child>
 
-                    <div className="fixed inset-0 overflow-y-auto">
-                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                    <div className="fixed inset-0 overflow-y-auto ">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center ">
                             <Transition.Child
                                 as={Fragment}
                                 enter="ease-out duration-300"
@@ -71,10 +68,10 @@ export default function SVGModalRadio({
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-fit transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                <Dialog.Panel className="w-fit transform overflow-hidden rounded-2xl border-2 border-black bg-light_background  p-6 text-left align-middle shadow-xl transition-all">
                                     <Dialog.Title
                                         as="h3"
-                                        className="text-lg font-medium leading-6 text-gray-900"
+                                        className="text-lg font-medium leading-6 text-light_text"
                                     >
                                         Select Icon
                                     </Dialog.Title>
@@ -98,11 +95,11 @@ export default function SVGModalRadio({
                                                                 checked,
                                                             }) =>
                                                                 classNames(
-                                                                    'sm:text-6xl text-5xl cursor-pointer focus:outline-none hover:ring-2 hover:ring-light_accent hover:ring-offset-2',
+                                                                    'sm:text-6xl text-5xl cursor-pointer focus:outline-none hover:ring-2 hover:ring-light_primary hover:ring-offset-2',
                                                                     checked
-                                                                        ? 'bg-light_secondary text-white hover:bg-light_text hover:text-light_background hover:ring-light_text'
-                                                                        : 'ring-1 ring-inset ring-gray-300 bg-white text-light_primary hover:bg-gray-50',
-                                                                    'flex items-center justify-center rounded-md py-3 px-3 text-sm font-semibold uppercase sm:flex-1'
+                                                                        ? 'bg-light_text text-light_background hover:ring-light_text'
+                                                                        : 'ring-1 ring-inset ring-gray-300 bg-light_background text-light_text ',
+                                                                    'flex items-center justify-center rounded-md py-3 px-3 text-sm font-semibold uppercase sm:flex-1 '
                                                                 )
                                                             }
                                                         >
@@ -128,7 +125,7 @@ export default function SVGModalRadio({
                                     <div className="mt-4">
                                         <button
                                             type="button"
-                                            className="inline-flex justify-center rounded-md border border-transparent bg-light_primary px-4 py-2 text-sm font-medium text-light_background hover:bg-light_accent focus:outline-none focus-visible:ring-2 focus-visible:ring-light_accent focus-visible:ring-offset-2"
+                                            className="inline-flex justify-center rounded-md border border-transparent bg-light_primary  px-4 py-2 text-sm font-medium text-light_background hover:bg-opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-light_accent focus-visible:ring-offset-2"
                                             onClick={closeModal}
                                         >
                                             Confirm
