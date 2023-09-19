@@ -11,6 +11,7 @@ import Sidebar from '@/components/Sidebar'
 import Radio from '@/components/radio'
 import UserIcon from '@/components/svg/userIcon'
 import { useRouter } from 'next/router'
+import NightSwitch from '@/components/NightSwitch'
 
 export const getServerSideProps = async (
     ctx: authCtx
@@ -161,6 +162,9 @@ const Page = (
                                 {props.display}
                             </p>
                             <p className="text-xl">{'Placeholder'}</p>
+                            <div className="py-4">
+                                <NightSwitch />
+                            </div>
                         </div>
                     </div>
                     <div className="flex flex-col gap-2 sm:gap-6 text-light_text dark:text-dark_text">
@@ -238,15 +242,15 @@ const Page = (
                                 />
                             </div>
                         </div>
+                        <div className=" flex justify-end items-center">
+                            <button
+                                type="submit"
+                                className="rounded-md bg-light_primary px-3 py-2 text-sm font-semibold text-light_background shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light_accent"
+                            >
+                                Submit Changes
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div className=" flex justify-center items-center">
-                    <button
-                        type="submit"
-                        className="rounded-md bg-light_primary px-3 py-2 text-sm font-semibold text-light_background shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light_accent"
-                    >
-                        Submit Changes
-                    </button>
                 </div>
             </form>
         </Sidebar>

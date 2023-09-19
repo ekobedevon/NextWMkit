@@ -79,7 +79,7 @@ const SignOut = (router: NextRouter) => {
 }
 
 const NavLinks = () =>{
-	const [darkMode, setDarkMode] = useAtom(darkModeAtom)
+	
 	return (
         <li>
             <ul role="list" className="-mx-2 space-y-1 ">
@@ -168,11 +168,10 @@ const Sidebar: React.FC<SidebarProps> = ({ children, data }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
 	const [darkMode, setDarkMode] = useAtom(darkModeAtom)
 	const router = useRouter()
-	const navBackground =
-        'flex grow flex-col gap-y-2 overflow-y-auto px-6 pb-2' + (darkMode ? "bg-dark_background" : "bg-light_background")
+	
     return (
         <>
-            <div className="dark">
+            <div className="">
                 <Transition.Root show={sidebarOpen} as={Fragment}>
                     <Dialog
                         as="div"
