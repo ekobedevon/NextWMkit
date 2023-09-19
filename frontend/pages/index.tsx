@@ -7,7 +7,8 @@ import type {
     InferGetServerSidePropsType,
 } from 'next'
 import { useState } from 'react'
-import Layout from '../components/Layout'
+
+import Sidebar from '@/components/Sidebar'
 
 export const getServerSideProps = async (
     ctx: authCtx
@@ -39,7 +40,7 @@ const Page = (
 
     const router = useRouter()
     return (
-        <Layout data={props}>
+        <Sidebar data={props}>
             <div className="flex flex-col gap-2">
                 <div className="flex flex-col gap-2 ">
                     <h1 className="font-bold text-">Profile</h1>
@@ -77,7 +78,7 @@ const Page = (
                 </button>
                 <p>{time?.toLocaleTimeString() || 'Click'}</p>
             </div>
-        </Layout>
+        </Sidebar>
     )
 }
 

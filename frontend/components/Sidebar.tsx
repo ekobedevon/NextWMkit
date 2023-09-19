@@ -45,6 +45,35 @@ interface SidebarProps {
         icon: string
     }
 }
+const SignOut = (router: NextRouter) => {
+    return (
+        <>
+            <Menu.Item>
+                <form
+                    method="post"
+                    action="/api/logout"
+                    onSubmit={async (e) => {
+                        e.preventDefault()
+                        const response = await fetch('/api/logout', {
+                            method: 'POST',
+                            redirect: 'manual',
+                        })
+                        if (response.status === 0 || response.ok) {
+                            router.push('/auth/login') // redirect to login page on success
+                        }
+                    }}
+                >
+                    <button
+                        value="Sign out"
+                        className=" w-full text-left block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50"
+                    >
+                        Sign Out
+                    </button>
+                </form>
+            </Menu.Item>
+        </>
+    )
+}
 
 const NavLinks = () =>{
 	return (
