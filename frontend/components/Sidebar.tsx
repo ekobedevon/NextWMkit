@@ -18,6 +18,7 @@ import { GiCowled } from 'react-icons/gi'
 import { useAtom } from 'jotai'
 import { darkModeAtom } from '@/utils/atom'
 
+
 const navigation = [
     { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
     { name: 'Team', href: '#', icon: UsersIcon, current: false },
@@ -88,25 +89,18 @@ const NavLinks = () =>{
                             href={item.href}
                             className={classNames(
                                 item.current
-                                    ? 'text-light_accent  '
-                                    : 'text-light_text  hover:text-light_accent  hover:drop-shadow-2xl',
-                                darkMode ? 'text-dark_text' : '',
-                                darkMode && item.current
-                                    ? 'ring-dark_accent ring-2'
-                                    : 'hover:text-dark_accent',
+                                    ? 'text-light_accent dark:text-dark_text dark:ring-dark_accent dark:ring-2  '
+                                    : 'text-light_text dark:text-dark_text hover:text-light_accent  hover:drop-shadow-2xl dark:hover:text-dark_accent',
                                 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold '
                             )}
                         >
                             <item.icon
                                 className={classNames(
                                     item.current
-                                        ? ''
+                                        ? 'dark:ring-dark_accent'
                                         : 'text-light_text dark:text-dark_text group-hover:text-light_accent dark:group-hover:text-dark_accent ',
                                     'h-6 w-6 shrink-0',
-                                    darkMode ? 'text-dark_text' : '',
-                                    darkMode && item.current
-                                        ? 'ring-dark_accent'
-                                        : 'hover:text-dark_accent'
+                                    
                                 )}
                                 aria-hidden="true"
                             />
@@ -236,7 +230,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children, data }) => {
                                         </div>
                                     </Transition.Child>
                                     {/* Sidebar component, swap this element with another sidebar if you like */}
-                                    {darkMode ? (
+                                    {false ? (
                                         <div
                                             className={
                                                 'flex grow flex-col gap-y-2 overflow-y-auto bg-dark_background px-6 pb-2'
