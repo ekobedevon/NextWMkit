@@ -122,7 +122,7 @@ const Page = (
     return (
         <Sidebar data={props}>
             <form
-                className="px-6 pt-8 pb-4 flex flex-col gap-8 border-2 rounded-md drop-shadow-lg"
+                className="px-6 pt-8 pb-4 flex flex-col gap-8 border-2 border-light_accent dark:border-dark_accent rounded-md drop-shadow-lg"
                 action="/api/update" // come back to later
                 method="post"
                 onSubmit={async (e) => {
@@ -163,7 +163,7 @@ const Page = (
                             <p className="text-xl">{'Placeholder'}</p>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-2 sm:gap-6">
+                    <div className="flex flex-col gap-2 sm:gap-6 text-light_text dark:text-dark_text">
                         <div className="">
                             <label
                                 htmlFor="display"
@@ -177,7 +177,7 @@ const Page = (
                                     name="display"
                                     type="text"
                                     autoComplete="false"
-                                    className="pl-2 block w-full bg-background rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent sm:text-sm sm:leading-6"
+                                    className="text-light_text pl-2 block w-full bg-background rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent dark:focus:ring-dark_accent sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
@@ -195,11 +195,11 @@ const Page = (
                                     name="password"
                                     type="password"
                                     autoComplete="false"
-                                    className="pl-2 block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent sm:text-sm sm:leading-6"
+                                    className="pl-2 block w-full rounded-md border-0 py-1.5 text-light_text  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent dark:focus:ring-dark_accent sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
-                        <div className="flex-1">
+                        <div className="flex-1 ">
                             {passMatch === true && (
                                 <label
                                     htmlFor="password"
@@ -234,7 +234,7 @@ const Page = (
                                     name="confPass"
                                     type="password"
                                     autoComplete="false"
-                                    className="pl-2 block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent sm:text-sm sm:leading-6"
+                                    className="text-light_text pl-2 block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent dark:focus:ring-dark_accent sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>

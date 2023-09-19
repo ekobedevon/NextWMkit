@@ -3,6 +3,8 @@ import { RadioGroup } from '@headlessui/react'
 import { SetStateAction, Dispatch } from 'react'
 import UserIcon from '@/components/svg/userIcon'
 import { Menu, Listbox, Dialog, Transition } from '@headlessui/react'
+import { useAtom } from 'jotai'
+import { darkModeAtom } from '@/utils/atom'
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -12,17 +14,25 @@ export interface radioDetails {
     options: string[]
     initial: string
     stateSetter: Dispatch<SetStateAction<string>>
-	srText:string
+    srText: string
 }
 
 export default function SVGModalRadio({
     options,
     initial,
     stateSetter,
-	srText
-    
+    srText,
 }: radioDetails) {
     const [isOpen, setIsOpen] = useState(false)
+    const [darkMode, setDarkMode] = useAtom(darkModeAtom)
+    const modalStyle =
+        'w-fit transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all' +
+        (darkMode ? ' bg-dark_background' : ' bg-light_background ')
+    const buttonStyle =
+        'bg-dark_text text-dark_background focus-visible:ring-dark_accent inline-flex justify-center rounded-md border border-transparent   px-4 py-2 text-sm font-medium hover:bg-opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-light_accent focus-visible:ring-offset-2' +
+        (darkMode
+            ? 'bg-white text-light_background focus-visible:ring-light_accent'
+            : 'bg-dark_text text-dark_background focus-visible:ring-dark_accent')
     function closeModal() {
         setIsOpen(false)
     }
@@ -36,7 +46,7 @@ export default function SVGModalRadio({
                 <button
                     type="button"
                     onClick={openModal}
-                    className="rounded-md sm:px-3 sm:py-3 text-sm font-medium border-2 hover:ring-4 ring-offset-4 active:bg-light_accent dark:active:bg-dark_accent active:bg-opacity-30  focus:outline-none focus-visible:ring-2 focus-visible:ring-light_text dark:focus-visible:ring-dark_text focus-visible:ring-opacity-75"
+                    className="rounded-md sm:px-3 sm:py-3 text-sm font-medium border-2 hover:ring-4 ring-offset-4 border-light_accent dark:border-dark_accent active:bg-light_accent dark:active:bg-dark_accent active:bg-opacity-30  focus:outline-none focus-visible:ring-2 focus-visible:ring-light_text dark:focus-visible:ring-dark_text focus-visible:ring-opacity-75"
                 >
                     <UserIcon Icon={initial} className="w-auto text-9xl " />
                     <span className="sr-only">{srText}</span>
@@ -68,7 +78,10 @@ export default function SVGModalRadio({
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-fit transform overflow-hidden rounded-2xl border-2 border-black bg-light_background  p-6 text-left align-middle shadow-xl transition-all">
+                                {/* w-fit transform overflow-hidden rounded-2xl
+                                bg-light_background dark:bg-dark_background p-6
+                                text-left align-middle shadow-xl transition-all */}
+                                <Dialog.Panel className={modalStyle}>
                                     <Dialog.Title
                                         as="h3"
                                         className="text-lg font-medium leading-6 text-light_text"
@@ -95,10 +108,17 @@ export default function SVGModalRadio({
                                                                 checked,
                                                             }) =>
                                                                 classNames(
-                                                                    'sm:text-6xl text-5xl cursor-pointer focus:outline-none hover:ring-2 hover:ring-light_primary hover:ring-offset-2',
+                                                                    'sm:text-6xl text-5xl cursor-pointer focus:outline-none hover:ring-2 hover:ring-light_primary hover:ring-offset-2 ',
+                                                                    darkMode
+                                                                        ? 'bg-light_text  text-light_background  '
+                                                                        : 'bg-dark_text  text-dark_background',
                                                                     checked
-                                                                        ? 'bg-light_text text-light_background hover:ring-light_text'
+                                                                        ? ' hover:ring-light_text'
                                                                         : 'ring-1 ring-inset ring-gray-300 bg-light_background text-light_text ',
+                                                                    darkMode &&
+                                                                        checked
+                                                                        ? 'bg-dark_accent  text-dark_background'
+                                                                        : 'ring-1 ring-inset ring-dark_accent text-dark_text',
                                                                     'flex items-center justify-center rounded-md py-3 px-3 text-sm font-semibold uppercase sm:flex-1 '
                                                                 )
                                                             }
@@ -112,7 +132,7 @@ export default function SVGModalRadio({
                                                                     Icon={
                                                                         option
                                                                     }
-                                                                    className=" w-auto sm:h-16 h-12"
+                                                                    className=" w-auto sm:h-16 h-12 dark:text-green-500"
                                                                 />
                                                             </RadioGroup.Label>
                                                         </RadioGroup.Option>
@@ -123,13 +143,23 @@ export default function SVGModalRadio({
                                     </div>
 
                                     <div className="mt-4">
-                                        <button
-                                            type="button"
-                                            className="inline-flex justify-center rounded-md border border-transparent bg-light_primary  px-4 py-2 text-sm font-medium text-light_background hover:bg-opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-light_accent focus-visible:ring-offset-2"
-                                            onClick={closeModal}
-                                        >
-                                            Confirm
-                                        </button>
+                                        {darkMode ? (
+                                            <button
+                                                type="button"
+                                                className="bg-dark_text text-dark_background focus-visible:ring-dark_accent inline-flex justify-center rounded-md border border-transparent   px-4 py-2 text-sm font-medium hover:bg-opacity-80 focus:outline-none focus-visible:ring-2  focus-visible:ring-offset-2"
+                                                onClick={closeModal}
+                                            >
+                                                Confirm
+                                            </button>
+                                        ) : (
+                                            <button
+                                                type="button"
+                                                className="bg-light_text text-light_background focus-visible:ring-light_accent inline-flex justify-center rounded-md border border-transparent   px-4 py-2 text-sm font-medium hover:bg-opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                                                onClick={closeModal}
+                                            >
+                                                Confirm
+                                            </button>
+                                        )}
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>

@@ -15,6 +15,8 @@ import UserIcon from '@/components/svg/userIcon'
 import { useRouter, NextRouter } from 'next/router'
 import Logo from './svg/logo'
 import { GiCowled } from 'react-icons/gi'
+import { useAtom } from 'jotai'
+import { darkModeAtom } from '@/utils/atom'
 
 const navigation = [
     { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
@@ -76,17 +78,22 @@ const SignOut = (router: NextRouter) => {
 }
 
 const NavLinks = () =>{
+	const [darkMode, setDarkMode] = useAtom(darkModeAtom)
 	return (
         <li>
-            <ul role="list" className="-mx-2 space-y-1">
+            <ul role="list" className="-mx-2 space-y-1 ">
                 {navigation.map((item) => (
                     <li key={item.name}>
                         <Link
                             href={item.href}
                             className={classNames(
                                 item.current
-                                    ? 'text-light_accent'
-                                    : 'text-light_text hover:text-light_accent hover:drop-shadow-2xl',
+                                    ? 'text-light_accent  '
+                                    : 'text-light_text  hover:text-light_accent  hover:drop-shadow-2xl',
+                                darkMode ? 'text-dark_text' : '',
+                                darkMode && item.current
+                                    ? 'ring-dark_accent ring-2'
+                                    : 'hover:text-dark_accent',
                                 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold '
                             )}
                         >
@@ -94,8 +101,12 @@ const NavLinks = () =>{
                                 className={classNames(
                                     item.current
                                         ? ''
-                                        : 'text-light_text group-hover:text-light_accent ',
-                                    'h-6 w-6 shrink-0'
+                                        : 'text-light_text dark:text-dark_text group-hover:text-light_accent dark:group-hover:text-dark_accent ',
+                                    'h-6 w-6 shrink-0',
+                                    darkMode ? 'text-dark_text' : '',
+                                    darkMode && item.current
+                                        ? 'ring-dark_accent'
+                                        : 'hover:text-dark_accent'
                                 )}
                                 aria-hidden="true"
                             />
@@ -111,13 +122,37 @@ const NavLinks = () =>{
 
 const NavOptions = () => {
     return (
-        <nav className="flex flex-1 flex-col text-light_text">
+        <nav className="flex flex-1 flex-col text-light_text dark:text-dark_text">
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <NavLinks />
                 <li className="-mx-6 mt-auto">
                     <Link
-                        href="#"
-                        className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6  hover:text-light_accent"
+                        href="/profile"
+                        className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6  hover:text-light_accent dark:hover:text-dark_accent"
+                    >
+                        <UserIcon
+                            Icon={'GICowled'}
+                            className="text-4xl p-[.125rem]"
+                        />
+                        <span className="sr-only">Your profile</span>
+                        <span aria-hidden="true" className="">
+                            Tom Cook
+                        </span>
+                    </Link>
+                </li>
+            </ul>
+        </nav>
+    )
+}
+const DarkNavOptions = () => {
+    return (
+        <nav className="flex flex-1 flex-col text-dark_text">
+            <ul role="list" className="flex flex-1 flex-col gap-y-7">
+                <NavLinks />
+                <li className="-mx-6 mt-auto">
+                    <Link
+                        href="/profile"
+                        className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6  hover:text-dark_accent"
                     >
                         <UserIcon
                             Icon={'GICowled'}
@@ -137,10 +172,13 @@ const NavOptions = () => {
 
 const Sidebar: React.FC<SidebarProps> = ({ children, data }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
+	const [darkMode, setDarkMode] = useAtom(darkModeAtom)
 	const router = useRouter()
+	const navBackground =
+        'flex grow flex-col gap-y-2 overflow-y-auto px-6 pb-2' + (darkMode ? "bg-dark_background" : "bg-light_background")
     return (
         <>
-            <div className="">
+            <div className="dark">
                 <Transition.Root show={sidebarOpen} as={Fragment}>
                     <Dialog
                         as="div"
@@ -198,19 +236,39 @@ const Sidebar: React.FC<SidebarProps> = ({ children, data }) => {
                                         </div>
                                     </Transition.Child>
                                     {/* Sidebar component, swap this element with another sidebar if you like */}
-                                    <div className="flex grow flex-col gap-y-2 overflow-y-auto bg-light_background px-6 pb-2">
-                                        <div className="flex h-16 shrink-0 items-center">
-                                            <Logo classname="h-12 w-auto fill-light_text" />
+                                    {darkMode ? (
+                                        <div
+                                            className={
+                                                'flex grow flex-col gap-y-2 overflow-y-auto bg-dark_background px-6 pb-2'
+                                            }
+                                        >
+                                            <div className="flex h-16 shrink-0 items-center">
+                                                <Logo classname="h-12 w-auto fill-dark_text" />
+                                            </div>
+                                            <nav className="flex flex-1 flex-col">
+                                                <ul
+                                                    role="list"
+                                                    className="flex flex-1 flex-col gap-y-7"
+                                                >
+                                                    <NavLinks />
+                                                </ul>
+                                            </nav>
                                         </div>
-                                        <nav className="flex flex-1 flex-col">
-                                            <ul
-                                                role="list"
-                                                className="flex flex-1 flex-col gap-y-7"
-                                            >
-                                                <NavLinks />
-                                            </ul>
-                                        </nav>
-                                    </div>
+                                    ) : (
+                                        <div className="flex grow flex-col gap-y-2 overflow-y-auto bg-light_background px-6 pb-2">
+                                            <div className="flex h-16 shrink-0 items-center">
+                                                <Logo classname="h-12 w-auto fill-light_text" />
+                                            </div>
+                                            <nav className="flex flex-1 flex-col">
+                                                <ul
+                                                    role="list"
+                                                    className="flex flex-1 flex-col gap-y-7"
+                                                >
+                                                    <NavLinks />
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    )}
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
@@ -220,15 +278,15 @@ const Sidebar: React.FC<SidebarProps> = ({ children, data }) => {
                 {/* Static sidebar for desktop */}
                 <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
                     {/* Sidebar component, swap this element with another sidebar if you like */}
-                    <div className="flex grow flex-col gap-y-2 overflow-y-auto bg-light_background px-6 drop-shadow-2xl">
+                    <div className="flex grow flex-col gap-y-2 overflow-y-auto bg-light_background dark:bg-dark_background px-6 drop-shadow-2xl">
                         <div className="flex h-16 shrink-0 items-center">
-                            <Logo classname="h-12 w-auto fill-light_text" />
+                            <Logo classname="h-12 w-auto fill-light_text dark:fill-dark_text" />
                         </div>
                         <NavOptions />
                     </div>
                 </div>
 
-                <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-light_background text-light_text px-4 py-4 shadow-sm sm:px-6 lg:hidden">
+                <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-light_background dark:bg-dark_background text-light_text dark:text-dark_text px-4 py-4 shadow-sm sm:px-6 lg:hidden">
                     <button
                         type="button"
                         className="-m-2.5 p-2.5  lg:hidden"
@@ -237,19 +295,19 @@ const Sidebar: React.FC<SidebarProps> = ({ children, data }) => {
                         <span className="sr-only">Open sidebar</span>
                         <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                     </button>
-                    <div className="flex-1 text-sm font-semibold leading-6 text-light_text">
+                    <div className="flex-1 text-sm font-semibold leading-6 text-light_text dark:text-dark_text">
                         Dashboard
                     </div>
                     <a href="#">
                         <span className="sr-only">Your profile</span>
                         <UserIcon
                             Icon={'GICowled'}
-                            className="text-4xl p-[.125rem]"
+                            className="text-4xl p-[.125rem] "
                         />
                     </a>
                 </div>
 
-                <main className="py-10 lg:pl-72 h-screen flex bg-light_background">
+                <main className="py-10 lg:pl-72 h-screen flex bg-light_background dark:bg-dark_background text-light_text dark:text-dark_text">
                     <div className="px-2 sm:px-6 lg:px-8 flex-1 flex  w-full h-full justify-center items-center">
                         {children}
                     </div>
