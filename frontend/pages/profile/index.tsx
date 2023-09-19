@@ -7,7 +7,6 @@ import type {
     InferGetServerSidePropsType,
 } from 'next'
 import { useEffect, useReducer, useState } from 'react'
-import Layout from '@/components/Layout'
 import Sidebar from '@/components/Sidebar'
 import Radio from '@/components/radio'
 import UserIcon from '@/components/svg/userIcon'
