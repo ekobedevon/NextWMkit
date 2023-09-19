@@ -13,8 +13,9 @@ psql -U $POSTGRES_USER -d $DB_NAME -c "
 -- Create the 'auth_user' table
 CREATE TABLE auth_user (
     id TEXT PRIMARY KEY,
-    username VARCHAR(255) UNIQUE,
-	icon VARCHAR(32) DEFAULT 'cowled.svg'
+    display VARCHAR(255) UNIQUE,
+	user_id VARCHAR(255) UNIQUE,
+	icon VARCHAR(32) DEFAULT 'GiCowled'
 );
 
 -- Create the 'user_key' table
