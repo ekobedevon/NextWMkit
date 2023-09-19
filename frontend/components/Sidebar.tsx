@@ -48,7 +48,7 @@ interface SidebarProps {
 const SignOut = (router: NextRouter) => {
     return (
         <>
-            <Menu.Item>
+            
                 <form
                     method="post"
                     action="/api/logout"
@@ -70,7 +70,7 @@ const SignOut = (router: NextRouter) => {
                         Sign Out
                     </button>
                 </form>
-            </Menu.Item>
+            
         </>
     )
 }
