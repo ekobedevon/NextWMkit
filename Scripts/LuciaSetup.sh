@@ -9,13 +9,20 @@ psql -U $POSTGRES_USER -d $POSTGRES_DB -c "CREATE DATABASE $DB_NAME;"
 
 # Connect to the "Lucia" database
 echo "Connecting to the $DB_NAME database..."
+
+
+
 psql -U $POSTGRES_USER -d $DB_NAME -c "
+
+CREATE TYPE roles AS ENUM ('Admin', 'Moderator', 'GM', 'Player');
+
 -- Create the 'auth_user' table
 CREATE TABLE auth_user (
     id TEXT PRIMARY KEY,
-    display VARCHAR(255) UNIQUE,
-	user_id VARCHAR(255) UNIQUE,
-	icon VARCHAR(32) DEFAULT 'GiCowled'
+    display VARCHAR(32) UNIQUE,
+    user_id TEXT UNIQUE,
+    icon VARCHAR(32) DEFAULT 'GiCowled',
+    role roles NOT NULL DEFAULT 'Player'
 );
 
 -- Create the 'user_key' table

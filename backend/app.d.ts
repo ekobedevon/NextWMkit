@@ -1,10 +1,11 @@
-// app.d.ts
-
 /// <reference types="lucia" />
 declare namespace Lucia {
-	type Auth = import("lucia").Auth;
-	type DatabaseUserAttributes = {
-		username: string;
-	};
-	type DatabaseSessionAttributes = {};
+    type Auth = import('lucia').Auth
+    type DatabaseUserAttributes = {
+        display: string
+        icon?: string
+        user_id: string
+        role?: string
+    }
+    type DatabaseSessionAttributes = {}
 }

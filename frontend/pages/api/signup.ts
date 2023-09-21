@@ -31,7 +31,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             attributes: {
                 display: username.toLowerCase(),
                 user_id: username.toLowerCase(),
-                icon: 'GiCowled',
             },
         })
 		const session = await auth.createSession({

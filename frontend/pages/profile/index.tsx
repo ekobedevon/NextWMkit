@@ -19,6 +19,7 @@ export const getServerSideProps = async (
     GetServerSidePropsResult<{
         display: string
         icon: string
+        role: string
     }>
 > =>
     redirectToLogin(ctx, async (ctx) => {
@@ -26,6 +27,7 @@ export const getServerSideProps = async (
             props: {
                 display: ctx.display,
                 icon: ctx.icon,
+				role: ctx.role
             },
         }
     })
@@ -119,7 +121,7 @@ const Page = (
             setPassMatch(undefined) // Either newPass or conPass is undefined or empty
         }
     }, [newPass, confPass])
-	console.log(props)
+    console.log(props)
     return (
         <Sidebar data={props}>
             <form
@@ -161,7 +163,7 @@ const Page = (
                             <p className="font-bold text-3xl">
                                 {props.display}
                             </p>
-                            <p className="text-xl">{'Placeholder'}</p>
+                            <p className="text-xl">{props.role}</p>
                             <div className="py-4">
                                 <NightSwitch />
                             </div>
