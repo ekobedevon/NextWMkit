@@ -40,5 +40,7 @@ CREATE TABLE user_session (
     idle_expires BIGINT NOT NULL
 );
 "
+psql -U "$POSTGRES_USER" -c "ALTER USER \"$POSTGRES_USER\" WITH PASSWORD '$POSTGRES_PASSWORD';"
+
 
 echo "Lucia database setup complete."

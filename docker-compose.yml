@@ -2,15 +2,26 @@
 version: '3.1'
 
 services:
-
-  db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: "${PG_USER}"
-      POSTGRES_PASSWORD: "${PG_PASSWORD}"
-    volumes:
-    - ./pgdata:/var/lib/postgresql/data
-    - ./Scripts:/docker-entrypoint-initdb.d
-    ports:
-      - "5432:5432"
+    db:
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_USER: '${PG_USER}'
+            POSTGRES_PASSWORD: '${PG_PASSWORD}'
+        volumes:
+            - ./pgdata:/var/lib/postgresql/data
+            - ./Scripts:/docker-entrypoint-initdb.d
+        ports:
+            - '5432:5432'
+    api:
+        image: u-bun-tu:latest
+        restart: always
+        environment:
+            POSTGRES_USER: '${PG_USER}'
+            POSTGRES_PASSWORD: '${PG_PASSWORD}'
+        volumes:
+            - ./backend:/app
+            - ./.env:/.env
+        ports:
+            - '8080:8080'
+        command: '/root/.bun/bin/bun run --hot app/Src/main.ts'
