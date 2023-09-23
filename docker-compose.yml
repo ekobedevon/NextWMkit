@@ -14,11 +14,8 @@ services:
         ports:
             - '5432:5432'
     api:
-        image: u-bun-tu:latest
+        image: ekobedevon/u-bun-tu
         restart: always
-        environment:
-            POSTGRES_USER: '${PG_USER}'
-            POSTGRES_PASSWORD: '${PG_PASSWORD}'
         volumes:
             - ./backend:/app
             - ./.env:/.env

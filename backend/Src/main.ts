@@ -27,7 +27,6 @@ const testAsync = async () => {
         .select()
         .from(users)
         .where(eq(users.role, 'Admin'))
-    console.log(allUsers)
     return allUsers
 }
 
