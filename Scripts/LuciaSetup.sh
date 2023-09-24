@@ -39,7 +39,19 @@ CREATE TABLE user_session (
     active_expires BIGINT NOT NULL,
     idle_expires BIGINT NOT NULL
 );
+
+-- Create the 'invites' table
+CREATE TABLE invites (
+    id TEXT PRIMARY KEY,
+    author_id TEXT NOT NULL,
+    expiration_utc TIMESTAMP WITHOUT TIME ZONE DEFAULT current_timestamp NOT NULL,
+    uses INT DEFAULT 0,
+    max_uses INT DEFAULT 10
+);
 "
+#Create the invite for the first user
+psql -U $POSTGRES_USER -d $DB_NAME -c "INSERT INTO invites (id, author_id, max_uses) VALUES ('ADMIN', 'SYSTEM', 1);"
+
 psql -U "$POSTGRES_USER" -c "ALTER USER \"$POSTGRES_USER\" WITH PASSWORD '$POSTGRES_PASSWORD';"
 
 

@@ -5,10 +5,11 @@ import corsOptions from '../utils/cors.js'
 import authCheck from '../utils/middleware.js'
 import { drizzle } from 'drizzle-orm/postgres-js'
 import { luciaClient } from '../db.js'
-import { users } from '../utils/schema/authSchema.js'
+import { users, invites } from '../utils/schema/authSchema.js'
 import { eq } from 'drizzle-orm'
-import SetupCheck from '../utils/Setup'
+import SetupCheck, { adminCheck } from '../utils/Setup'
 // import testRouter from './test'; // Import your route file
+import inviteRouter from './invite.js'
 
 const port = 8080
 app.use(express.json()) // for application/json
@@ -18,7 +19,7 @@ app.use(authCheck)
 SetupCheck()
 
 // Use the imported route in your Express app
-// app.use('/test', testRouter);
+app.use('/invite', inviteRouter);
 
 const db = drizzle(luciaClient)
 
@@ -31,10 +32,13 @@ const testAsync = async () => {
 }
 
 app.get('/', async (_req, res) => {
-    const sample = await testAsync()
-    res.json(sample.length)
+    //const sample = await testAsync()
+    res.json({test:"test"})
 })
+
 
 app.listen(port, () => {
     return console.log(`Express is listening at http://localhost:${port}`)
 })
+
+

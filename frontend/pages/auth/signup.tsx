@@ -56,6 +56,7 @@ const Page = () => {
                                     body: JSON.stringify({
                                         username: formData.get('username'),
                                         password: formData.get('password'),
+                                        code: formData.get('code'),
                                     }),
                                     headers: {
                                         'Content-Type': 'application/json',
@@ -66,6 +67,10 @@ const Page = () => {
                             if (response.status === 0 || response.ok) {
                                 router.push('/') // redirect to profile page on success
                             }
+							else
+							{
+								console.log(response)
+							}						
                         }}
                     >
                         <div>
@@ -90,7 +95,7 @@ const Page = () => {
                             <div className="flex items-center justify-between">
                                 <label
                                     htmlFor="password"
-                                    className=" pl-2 block text-sm font-medium leading-6 "
+                                    className=" block text-sm font-medium leading-6 "
                                 >
                                     Password
                                 </label>
@@ -108,6 +113,33 @@ const Page = () => {
                                     id="password"
                                     name="password"
                                     type="password"
+                                    required
+                                    className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-light_accent sm:text-sm sm:leading-6"
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <div className="flex items-center justify-between">
+                                <label
+                                    htmlFor="password"
+                                    className=" block text-sm font-medium leading-6 "
+                                >
+                                    Invite Code
+                                </label>
+                                {/* <div className="text-sm">
+                                    <a
+                                        href="#"
+                                        className="font-semibold text-light_accent hover:text-blue-500"
+                                    >
+                                        Forgot password?
+                                    </a>
+                                </div> */}
+                            </div>
+                            <div className="mt-2">
+                                <input
+                                    id="code"
+                                    name="code"
+                                    type="text"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-light_accent sm:text-sm sm:leading-6"
                                 />

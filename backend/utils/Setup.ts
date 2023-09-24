@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm'
 const db = drizzle(luciaClient)
 
 
-const adminCheck = async () => {
+export const adminCheck = async () => {
     const allUsers = await db
         .select()
         .from(users)
