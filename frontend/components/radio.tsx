@@ -110,15 +110,15 @@ export default function SVGModalRadio({
                                                                 classNames(
                                                                     'sm:text-6xl text-5xl cursor-pointer focus:outline-none hover:ring-2 hover:ring-light_primary hover:ring-offset-2 ',
                                                                     darkMode
-                                                                        ? 'bg-light_text  text-light_background  '
-                                                                        : 'bg-dark_text  text-dark_background',
+                                                                        ? 'bg-light_text text-light_background' // Dark mode handles default text/background
+                                                                        : 'bg-dark_text  text-dark_background', // Ligh mode handles default text/background
                                                                     checked
-                                                                        ? ' hover:ring-light_text'
-                                                                        : 'ring-1 ring-inset ring-gray-300 bg-light_background text-light_text ',
+                                                                        ? ' hover:ring-light_text bg-light_text text-light_background' // here to set light mode checked item
+                                                                        : 'ring-1 ring-inset ring-light_primary bg-light_background ', // here to set light mode unchecked item
                                                                     darkMode &&
                                                                         checked
-                                                                        ? 'bg-dark_accent  text-dark_background'
-                                                                        : 'ring-1 ring-inset ring-dark_accent text-dark_text',
+                                                                        ? 'bg-dark_accent  text-dark_background ring-light_text border-2 border-dark_text' // here to set dark mode checked item
+                                                                        : 'ring-1 ring-inset  ', // here to set dark mode unchecked item
                                                                     'flex items-center justify-center rounded-md py-3 px-3 text-sm font-semibold uppercase sm:flex-1 '
                                                                 )
                                                             }
