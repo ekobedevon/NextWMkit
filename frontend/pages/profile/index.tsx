@@ -81,6 +81,9 @@ const Page = (
     const [confPass, setConPass] = useState<string>('')
     const [passMatch, setPassMatch] = useState<boolean | undefined>()
     const [icon, setIcon] = useState<string>(props.icon)
+	useEffect(()=>{
+		console.log(icon)
+	},[icon])
 
     useEffect(() => {
         // Check if both newPass and conPass are defined and not empty
@@ -115,6 +118,7 @@ const Page = (
                             display: formData.get('display') || undefined,
                             password: newPass,
                             confPass: confPass,
+							icon: icon
                         }),
                         headers: {
                             'Content-Type': 'application/json',
@@ -123,6 +127,7 @@ const Page = (
                     })
 
                     if (response.status === 0 || response.ok) {
+						console.log("GUCCI")
                         router.reload() // redirect to profile page on success
                     }
                 }}

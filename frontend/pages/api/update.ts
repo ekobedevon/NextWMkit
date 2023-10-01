@@ -3,6 +3,38 @@ import { LuciaError } from 'lucia'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
 
+const iconList: string[] = [
+    'GiBarbarian',
+    'GiBarbute',
+    'GiBrutalHelm',
+    'GiCowled',
+    'GiCultist',
+    'GiDiabloSkull',
+    'GiVampireDracula',
+    'Gi3DGlasses',
+    'GiDragonHead',
+    'GiDwarfFace',
+    'GiDwarfHelmet',
+    'GiDwarfKing',
+    'GiElfHelmet',
+    'GiExecutionerHood',
+    'GiWomanElfFace',
+    'GiFishMonster',
+    'GiGoblinHead',
+    'GiGolemHead',
+    'GiKenkuHead',
+    'GiMonkFace',
+    'GiNunFace',
+    'GiOgre',
+    'GiOrcHead',
+    'GiOverlordHelm',
+    'GiTroll',
+    'GiRestingVampire',
+    'GiVisoredHelm',
+    'GiWarlockHood',
+    'GiWizardFace',
+]
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'POST') return res.status(405)
     const { display, password, confPass, icon } = req.body as {
@@ -11,7 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         confPass: string
         icon: string
     }
-	
+
     let updateDetails = { display: '', password: '', icon: '' }
 
     // basic check
@@ -35,26 +67,28 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             res,
         })
         const session = await authRequest.validate()
-		console.log('display below')
-        console.log(display)
-		console.log(session.user.display)
-		if (display !== undefined)
-            {
-				if (
-                    display !== session.user.display &&
-                    (display.length > 1 || display.length < 31)
-                ) {
-                    console.log('2')
-                    console.log(display)
-                    const user = await auth.updateUserAttributes(
-                        session.user.userId,
-                        {
-                            display: display,
-                        } // expects partial `Lucia.DatabaseUserAttributes`
-                    )
-                    updateDetails.display = 'Updated'
-                }
-			}
+        if (iconList.includes(icon)) {
+            const user = await auth.updateUserAttributes(session.user.userId, {
+                icon: icon,
+            })
+            updateDetails.icon = 'Updated'
+        }
+        if (display !== undefined) {
+            if (
+                display !== session.user.display &&
+                (display.length > 1 || display.length < 31)
+            ) {
+                console.log('2')
+                console.log(display)
+                const user = await auth.updateUserAttributes(
+                    session.user.userId,
+                    {
+                        display: display,
+                    }
+                )
+                updateDetails.display = 'Updated'
+            }
+        }
 
         if (confPass === password) {
             const newKey = await auth.updateKeyPassword(
@@ -63,28 +97,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 password
             )
             updateDetails.password = 'Updated'
-            console.log(newKey)
         } else {
             updateDetails.password = 'Passwords Mismatch'
         }
 
-        // const key = await auth.updateKeyPassword(
-        //     'username',
-        //     username.toLowerCase(),
-        //     password
-        // )
-        // const newSession = await auth.createSession({
-        //     userId: key.userId,
-        //     attributes: {},
-        // })
-        // const authRequest = auth.handleRequest({
-        //     req,
-        //     res,
-        // })
-        // authRequest.setSession(newSession)
         return res.redirect(302, '/profile') // profile page
     } catch (e: any) {
-		console.log(e)
+        console.log(e)
         if (
             e instanceof LuciaError &&
             (e.message === 'AUTH_INVALID_KEY_ID' ||
