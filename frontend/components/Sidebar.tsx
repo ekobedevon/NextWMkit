@@ -9,6 +9,7 @@ import {
     HomeIcon,
     UsersIcon,
     XMarkIcon,
+	ArrowRightOnRectangleIcon
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import UserIcon from '@/components/svg/userIcon'
@@ -43,44 +44,42 @@ function classNames(...classes:string[]) {
 }
 interface SidebarProps {
     children: React.ReactNode
-    data: {
+    props: {
         display: string
         icon: string
     }
 }
-const SignOut = (router: NextRouter) => {
+const SignOut = ({ router }: { router: NextRouter }) => {
     return (
         <>
-            
-                <form
-                    method="post"
-                    action="/api/logout"
-                    onSubmit={async (e) => {
-                        e.preventDefault()
-                        const response = await fetch('/api/logout', {
-                            method: 'POST',
-                            redirect: 'manual',
-                        })
-                        if (response.status === 0 || response.ok) {
-                            router.push('/auth/login') // redirect to login page on success
-                        }
-                    }}
+            <form
+                method="post"
+                action="/api/logout"
+                onSubmit={async (e) => {
+                    e.preventDefault()
+                    const response = await fetch('/api/logout', {
+                        method: 'POST',
+                        redirect: 'manual',
+                    })
+                    if (response.status === 0 || response.ok) {
+                        router.push('/auth/login') // redirect to login page on success
+                    }
+                }}
+            >
+                <button
+                    value="Sign out"
+                    className=" w-full text-left block px-3 py-1 text-sm leading-6 hover:text-light_accent dark:hover:text-dark_accent"
                 >
-                    <button
-                        value="Sign out"
-                        className=" w-full text-left block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50"
-                    >
-                        Sign Out
-                    </button>
-                </form>
-            
+                    <ArrowRightOnRectangleIcon className="h-6 pr-2  " />
+                    <span className="sr-only">Logout</span>
+                </button>
+            </form>
         </>
     )
 }
 
-const NavLinks = () =>{
-	
-	return (
+const NavLinks = () => {
+    return (
         <li>
             <ul role="list" className="-mx-2 space-y-1 ">
                 {navigation.map((item) => (
@@ -99,8 +98,7 @@ const NavLinks = () =>{
                                     item.current
                                         ? 'dark:ring-dark_accent'
                                         : 'text-light_text dark:text-dark_text group-hover:text-light_accent dark:group-hover:text-dark_accent ',
-                                    'h-6 w-6 shrink-0',
-                                    
+                                    'h-6 w-6 shrink-0'
                                 )}
                                 aria-hidden="true"
                             />
@@ -114,25 +112,24 @@ const NavLinks = () =>{
 }
 
 
-const NavOptions = () => {
+
+const NavOptions = ({router,icon}:{router:NextRouter,icon:string}) => {
     return (
         <nav className="flex flex-1 flex-col text-light_text dark:text-dark_text">
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <NavLinks />
-                <li className="-mx-6 mt-auto">
+                <li className="-mx-6 mt-auto hidden sm:flex items-center justify-between py-3 px-4 ">
                     <Link
                         href="/profile"
-                        className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6  hover:text-light_accent dark:hover:text-dark_accent"
+                        className="flex items-center text-sm font-semibold leading-6  hover:text-light_accent dark:hover:text-dark_accent"
                     >
                         <UserIcon
-                            Icon={'GICowled'}
+                            Icon={icon}
                             className="text-4xl p-[.125rem]"
                         />
                         <span className="sr-only">Your profile</span>
-                        <span aria-hidden="true" className="">
-                            Tom Cook
-                        </span>
                     </Link>
+					<SignOut router={router}/>
                 </li>
             </ul>
         </nav>
@@ -164,10 +161,10 @@ const DarkNavOptions = () => {
 }
 
 
-const Sidebar: React.FC<SidebarProps> = ({ children, data }) => {
+const Sidebar: React.FC<SidebarProps> = ({ children, props }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
 	const [darkMode, setDarkMode] = useAtom(darkModeAtom)
-	const router = useRouter()
+	const router:NextRouter = useRouter()
 	
     return (
         <>
@@ -259,6 +256,12 @@ const Sidebar: React.FC<SidebarProps> = ({ children, data }) => {
                                                 >
                                                     <NavLinks />
                                                 </ul>
+                                                <Link href={'/api/logout'}>
+                                                    <ArrowRightOnRectangleIcon className="h-6  hover:text-light_accent dark:hover:text-dark_accent mb-4" />
+                                                    <span className="sr-only">
+                                                        Logout
+                                                    </span>
+                                                </Link>
                                             </nav>
                                         </div>
                                     )}
@@ -275,7 +278,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children, data }) => {
                         <div className="flex h-16 shrink-0 items-center">
                             <Logo classname="h-12 w-auto fill-light_text dark:fill-dark_text" />
                         </div>
-                        <NavOptions />
+                        <NavOptions router={router} icon={props.icon}/>
                     </div>
                 </div>
 
@@ -291,13 +294,14 @@ const Sidebar: React.FC<SidebarProps> = ({ children, data }) => {
                     <div className="flex-1 text-sm font-semibold leading-6 text-light_text dark:text-dark_text">
                         Dashboard
                     </div>
-                    <a href="#">
+                    <Link href="/profile">
                         <span className="sr-only">Your profile</span>
                         <UserIcon
-                            Icon={'GICowled'}
+                            Icon={props.icon}
                             className="text-4xl p-[.125rem] "
                         />
-                    </a>
+                    </Link>
+					
                 </div>
 
                 <main className="py-10 lg:pl-72 h-screen flex bg-light_background dark:bg-dark_background text-light_text dark:text-dark_text">

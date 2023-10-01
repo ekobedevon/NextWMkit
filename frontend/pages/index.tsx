@@ -40,7 +40,7 @@ const Page = (
 
     const router = useRouter()
     return (
-        <Sidebar data={props}>
+        <Sidebar props={props}>
             <div className="flex flex-col gap-2">
                 <div className="flex flex-col gap-2 ">
                     <h1 className="font-bold text-">Profile</h1>

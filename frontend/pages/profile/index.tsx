@@ -70,23 +70,7 @@ const iconList: string[] = [
     'GiWizardFace',
 ]
 
-interface Action {
-    type: string // The type property is typically a string or a constant.
-    value: string // You can specify additional properties as needed.
-}
 
-const counterReducer = (state: { text: number }, action: Action) => {
-    switch (action.type) {
-        case 'update':
-
-        case 'decrement':
-
-        case 'reset':
-            return { count: 0 }
-        default:
-            return state
-    }
-}
 
 const Page = (
     props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -97,11 +81,6 @@ const Page = (
     const [confPass, setConPass] = useState<string>('')
     const [passMatch, setPassMatch] = useState<boolean | undefined>()
     const [icon, setIcon] = useState<string>(props.icon)
-    const testCall = async () => {
-        const newDate = new Date()
-        console.log(newDate.toDateString)
-        setTime(newDate)
-    }
 
     useEffect(() => {
         // Check if both newPass and conPass are defined and not empty
@@ -121,9 +100,8 @@ const Page = (
             setPassMatch(undefined) // Either newPass or conPass is undefined or empty
         }
     }, [newPass, confPass])
-    console.log(props)
     return (
-        <Sidebar data={props}>
+        <Sidebar props={props}>
             <form
                 className="px-6 pt-8 pb-4 flex flex-col gap-8 border-2 border-light_accent dark:border-dark_accent rounded-md drop-shadow-lg"
                 action="/api/update" // come back to later
