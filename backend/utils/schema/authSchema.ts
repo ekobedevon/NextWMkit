@@ -21,7 +21,9 @@ export const users = pgTable('auth_user', {
 export const invites = pgTable('invites', {
     id: text('id').primaryKey(),
     authorId: text('author_id').notNull(),
-    expiration: timestamp('expiration_utc', { withTimezone: false }),
-    uses: integer('uses').notNull(),
-    max_uses: integer('max_uses'),
+    expiration: timestamp('expiration_utc', {
+        withTimezone: false,
+    }).defaultNow(),
+    uses: integer('uses').notNull().default(0),
+    max_uses: integer('max_uses').default(10),
 })
