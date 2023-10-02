@@ -8,9 +8,11 @@ import type {
 } from 'next'
 import { useEffect, useReducer, useState } from 'react'
 import Sidebar from '@/components/Sidebar'
-import Radio from '@/components/radio'
+import { LightSVGModalRadio,DarkSVGModalRadio } from '@/components/IconRadio'
 import UserIcon from '@/components/svg/userIcon'
 import { useRouter } from 'next/router'
+import { darkModeAtom } from '@/utils/atom'
+import { useAtom } from 'jotai'
 import NightSwitch from '@/components/NightSwitch'
 
 export const getServerSideProps = async (
@@ -75,12 +77,12 @@ const iconList: string[] = [
 const Page = (
     props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-    const [time, setTime] = useState<Date>()
     const router = useRouter()
     const [newPass, setNewPass] = useState<string>('')
     const [confPass, setConPass] = useState<string>('')
     const [passMatch, setPassMatch] = useState<boolean | undefined>()
     const [icon, setIcon] = useState<string>(props.icon)
+	const [darkMode,setDarkMode] = useAtom(darkModeAtom)
 	useEffect(()=>{
 		console.log(icon)
 	},[icon])
@@ -106,7 +108,7 @@ const Page = (
     return (
         <Sidebar props={props}>
             <form
-                className="px-6 pt-8 pb-4 flex flex-col gap-8 border-2 border-light_accent dark:border-dark_accent rounded-md drop-shadow-lg"
+                className="px-6 pt-8 pb-4 flex flex-col gap-8 border-2 border-light_primary dark:border-dark_primary rounded-md drop-shadow-lg"
                 action="/api/update" // come back to later
                 method="post"
                 onSubmit={async (e) => {
@@ -118,7 +120,7 @@ const Page = (
                             display: formData.get('display') || undefined,
                             password: newPass,
                             confPass: confPass,
-							icon: icon
+                            icon: icon,
                         }),
                         headers: {
                             'Content-Type': 'application/json',
@@ -127,32 +129,42 @@ const Page = (
                     })
 
                     if (response.status === 0 || response.ok) {
-						console.log("GUCCI")
+                        console.log('GUCCI')
                         router.reload() // redirect to profile page on success
                     }
                 }}
             >
                 <div className="flex sm:flex-row flex-col items-center sm:gap-12 gap-4 sm:pl-2 text-light_text dark:text-dark_text">
-                    <div className="flex items-center flex-col gap-6">
+                    <div className="flex items-center flex-col gap-3">
+						<p className='text-xl font-bold'>Change Icon</p>
                         <div className="">
-                            <Radio
-                                stateSetter={setIcon}
-                                options={iconList}
-                                initial={icon}
-                                srText="Change Icon"
-                            />
+                            {darkMode ? (
+                                <DarkSVGModalRadio
+                                    stateSetter={setIcon}
+                                    options={iconList}
+                                    initial={icon}
+                                    srText="Change Icon"
+                                />
+                            ) : (
+                                <LightSVGModalRadio
+                                    stateSetter={setIcon}
+                                    options={iconList}
+                                    initial={icon}
+                                    srText="Change Icon"
+                                />
+                            )}
                         </div>
                         <div className="flex flex-col items-center  ">
                             <p className="font-bold text-3xl">
                                 {props.display}
                             </p>
                             <p className="text-xl">{props.role}</p>
-                            <div className="py-4">
+                            <div className="my-4">
                                 <NightSwitch />
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-2 sm:gap-6 text-light_text dark:text-dark_text">
+                    <div className="flex flex-col gap-2 sm:gap-6 ">
                         <div className="">
                             <label
                                 htmlFor="display"
@@ -166,7 +178,7 @@ const Page = (
                                     name="display"
                                     type="text"
                                     autoComplete="false"
-                                    className="text-light_text pl-2 block w-full bg-background rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent dark:focus:ring-dark_accent sm:text-sm sm:leading-6"
+                                    className=" pl-2 block w-full bg-background rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent dark:focus:ring-dark_accent sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
@@ -184,7 +196,7 @@ const Page = (
                                     name="password"
                                     type="password"
                                     autoComplete="false"
-                                    className="pl-2 block w-full rounded-md border-0 py-1.5 text-light_text  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent dark:focus:ring-dark_accent sm:text-sm sm:leading-6"
+                                    className="pl-2 block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent dark:focus:ring-dark_accent sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
@@ -223,14 +235,14 @@ const Page = (
                                     name="confPass"
                                     type="password"
                                     autoComplete="false"
-                                    className="text-light_text pl-2 block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent dark:focus:ring-dark_accent sm:text-sm sm:leading-6"
+                                    className="text-light_text dark:text-dark_background pl-2 block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-light_accent dark:focus:ring-dark_accent sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
                         <div className=" flex justify-end items-center">
                             <button
                                 type="submit"
-                                className="rounded-md bg-light_primary px-3 py-2 text-sm font-semibold text-light_background shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light_accent"
+                                className="rounded-md bg-light_text text-light_background dark:bg-dark_text dark:text-dark_background  px-3 py-2 text-sm font-semibold shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light_accent"
                             >
                                 Submit Changes
                             </button>

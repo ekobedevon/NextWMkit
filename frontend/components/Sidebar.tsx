@@ -31,7 +31,12 @@ const navigation = [
     // { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
 ]
 const adminNav = [
-    { name: 'Invites', href: '/manage/invites', icon: EnvelopeIcon, current: false },
+    {
+        name: 'Invites',
+        href: '/manage/invites',
+        icon: EnvelopeIcon,
+        current: false,
+    },
 ]
 
 function classNames(...classes: string[]) {
@@ -303,7 +308,11 @@ const Sidebar: React.FC<SidebarProps> = ({ children, props }) => {
                         <div className="flex h-16 shrink-0 items-center">
                             <Logo classname="h-12 w-auto fill-light_text dark:fill-dark_text" />
                         </div>
-                        <NavOptions isAdmin={isAdmin} router={router} icon={props.icon} />
+                        <NavOptions
+                            isAdmin={isAdmin}
+                            router={router}
+                            icon={props.icon}
+                        />
                     </div>
                 </div>
 
