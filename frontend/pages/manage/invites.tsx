@@ -1,6 +1,6 @@
 // pages/index.tsx
 import { useRouter } from 'next/router'
-import redirectToLogin,{authCtx} from '@/utils/redirectToLogin'
+import redirectToLogin, { authCtx } from '@/utils/redirectToLogin'
 
 import type {
     GetServerSidePropsResult,
@@ -24,11 +24,10 @@ export const getServerSideProps = async (
             props: {
                 display: ctx.display,
                 icon: ctx.icon,
-                role: ctx.role,
+				role: ctx.role
             },
         }
     })
-
 
 const Page = (
     props: InferGetServerSidePropsType<typeof getServerSideProps>

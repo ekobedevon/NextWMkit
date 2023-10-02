@@ -9,37 +9,32 @@ import {
     HomeIcon,
     UsersIcon,
     XMarkIcon,
-	ArrowRightOnRectangleIcon
+    ArrowRightOnRectangleIcon,
+    EnvelopeIcon,
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import UserIcon from '@/components/svg/userIcon'
 import { useRouter, NextRouter } from 'next/router'
 import Logo from './svg/logo'
-import { GiCowled } from 'react-icons/gi'
-import { useAtom } from 'jotai'
-import { darkModeAtom } from '@/utils/atom'
-
 
 const navigation = [
     { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-    { name: 'Team', href: '#', icon: UsersIcon, current: false },
-    { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-    { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-    {
-        name: 'Documents',
-        href: '#',
-        icon: DocumentDuplicateIcon,
-        current: false,
-    },
-    { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
+    // { name: 'Team', href: '#', icon: UsersIcon, current: false },
+    // { name: 'Projects', href: '#', icon: FolderIcon, current: false },
+    // { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
+    // {
+    //     name: 'Documents',
+    //     href: '#',
+    //     icon: DocumentDuplicateIcon,
+    //     current: false,
+    // },
+    // { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
 ]
-const teams = [
-    { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
-    { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-    { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
+const adminNav = [
+    { name: 'Invites', href: '/manage/invites', icon: EnvelopeIcon, current: false },
 ]
 
-function classNames(...classes:string[]) {
+function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 interface SidebarProps {
@@ -47,6 +42,7 @@ interface SidebarProps {
     props: {
         display: string
         icon: string
+        role: string
     }
 }
 const SignOut = ({ router }: { router: NextRouter }) => {
@@ -78,17 +74,62 @@ const SignOut = ({ router }: { router: NextRouter }) => {
     )
 }
 
-const NavLinks = () => {
+const NavLinks = ({ isAdmin }: { isAdmin: boolean }) => {
+    return (
+        <div className="">
+            <li>
+                <ul role="list" className="-mx-2 space-y-1 ">
+                    {navigation.map((item) => (
+                        <li key={item.name}>
+                            <Link
+                                href={item.href}
+                                className={classNames(
+                                    item.current
+                                        ? 'text-light_accent dark:text-dark_text dark:ring-dark_accent dark:ring-2'
+                                        : 'text-light_text dark:text-dark_text hover:text-light_accent  hover:drop-shadow-2xl dark:hover:text-dark_accent',
+                                    'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold '
+                                )}
+                            >
+                                <item.icon
+                                    className={classNames(
+                                        item.current
+                                            ? 'dark:ring-dark_accent'
+                                            : 'text-light_text dark:text-dark_text group-hover:text-light_accent dark:group-hover:text-dark_accent ',
+                                        'h-6 w-6 shrink-0'
+                                    )}
+                                    aria-hidden="true"
+                                />
+                                {item.name}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </li>
+            {isAdmin ? (
+                <div className="flex flex-col py-2">
+                    <div className="text-sm font-semibold leading-6 text-light_text/60 dark:text-dark_text/80  dark:underline">
+                        Admin
+                    </div>
+                    <AdminLinks />
+                </div>
+            ) : (
+                <></>
+            )}
+        </div>
+    )
+}
+
+const AdminLinks = () => {
     return (
         <li>
             <ul role="list" className="-mx-2 space-y-1 ">
-                {navigation.map((item) => (
+                {adminNav.map((item) => (
                     <li key={item.name}>
                         <Link
                             href={item.href}
                             className={classNames(
                                 item.current
-                                    ? 'text-light_accent dark:text-dark_text dark:ring-dark_accent dark:ring-2  '
+                                    ? 'text-light_accent dark:text-dark_text dark:ring-dark_accent dark:ring-2'
                                     : 'text-light_text dark:text-dark_text hover:text-light_accent  hover:drop-shadow-2xl dark:hover:text-dark_accent',
                                 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold '
                             )}
@@ -111,13 +152,19 @@ const NavLinks = () => {
     )
 }
 
-
-
-const NavOptions = ({router,icon}:{router:NextRouter,icon:string}) => {
+const NavOptions = ({
+    router,
+    icon,
+    isAdmin,
+}: {
+    router: NextRouter
+    icon: string
+    isAdmin: boolean
+}) => {
     return (
         <nav className="flex flex-1 flex-col text-light_text dark:text-dark_text">
-            <ul role="list" className="flex flex-1 flex-col gap-y-7">
-                <NavLinks />
+            <ul role="list" className="flex flex-1 flex-col gap-y-4">
+                <NavLinks isAdmin={isAdmin} />
                 <li className="-mx-6 mt-auto hidden sm:flex items-center justify-between py-3 px-4 ">
                     <Link
                         href="/profile"
@@ -129,43 +176,17 @@ const NavOptions = ({router,icon}:{router:NextRouter,icon:string}) => {
                         />
                         <span className="sr-only">Your profile</span>
                     </Link>
-					<SignOut router={router}/>
+                    <SignOut router={router} />
                 </li>
             </ul>
         </nav>
     )
 }
-const DarkNavOptions = () => {
-    return (
-        <nav className="flex flex-1 flex-col text-dark_text">
-            <ul role="list" className="flex flex-1 flex-col gap-y-7">
-                <NavLinks />
-                <li className="-mx-6 mt-auto">
-                    <Link
-                        href="/profile"
-                        className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6  hover:text-dark_accent"
-                    >
-                        <UserIcon
-                            Icon={'GICowled'}
-                            className="text-4xl p-[.125rem]"
-                        />
-                        <span className="sr-only">Your profile</span>
-                        <span aria-hidden="true" className="">
-                            Tom Cook
-                        </span>
-                    </Link>
-                </li>
-            </ul>
-        </nav>
-    )
-}
-
 
 const Sidebar: React.FC<SidebarProps> = ({ children, props }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
-	const [darkMode, setDarkMode] = useAtom(darkModeAtom)
-	const router:NextRouter = useRouter()
-	
+    const router: NextRouter = useRouter()
+    const isAdmin = props.role === 'Admin'
     return (
         <>
             <div className="">
@@ -240,7 +261,9 @@ const Sidebar: React.FC<SidebarProps> = ({ children, props }) => {
                                                     role="list"
                                                     className="flex flex-1 flex-col gap-y-7"
                                                 >
-                                                    <NavLinks />
+                                                    <NavLinks
+                                                        isAdmin={isAdmin}
+                                                    />
                                                 </ul>
                                             </nav>
                                         </div>
@@ -254,7 +277,9 @@ const Sidebar: React.FC<SidebarProps> = ({ children, props }) => {
                                                     role="list"
                                                     className="flex flex-1 flex-col gap-y-7"
                                                 >
-                                                    <NavLinks />
+                                                    <NavLinks
+                                                        isAdmin={isAdmin}
+                                                    />
                                                 </ul>
                                                 <Link href={'/api/logout'}>
                                                     <ArrowRightOnRectangleIcon className="h-6  hover:text-light_accent dark:hover:text-dark_accent mb-4" />
@@ -278,7 +303,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children, props }) => {
                         <div className="flex h-16 shrink-0 items-center">
                             <Logo classname="h-12 w-auto fill-light_text dark:fill-dark_text" />
                         </div>
-                        <NavOptions router={router} icon={props.icon}/>
+                        <NavOptions isAdmin={isAdmin} router={router} icon={props.icon} />
                     </div>
                 </div>
 
@@ -301,7 +326,6 @@ const Sidebar: React.FC<SidebarProps> = ({ children, props }) => {
                             className="text-4xl p-[.125rem] "
                         />
                     </Link>
-					
                 </div>
 
                 <main className="py-10 lg:pl-72 h-screen flex bg-light_background dark:bg-dark_background text-light_text dark:text-dark_text">
