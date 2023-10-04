@@ -15,7 +15,7 @@ export const auth = lucia({
     middleware: express(),
     getUserAttributes: (data: any) => {
         return {
-            username: data.username,
+            display: data.display,
         }
     },
 })

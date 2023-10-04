@@ -10,6 +10,7 @@ import { eq } from 'drizzle-orm'
 import SetupCheck, { adminCheck } from '../utils/Setup'
 // import testRouter from './test'; // Import your route file
 import inviteRouter from './invite.js'
+import ck from 'ckey'
 
 const port = 8080
 app.use(express.json()) // for application/json
@@ -33,7 +34,8 @@ const testAsync = async () => {
 
 app.get('/', async (_req, res) => {
     //const sample = await testAsync()
-    res.json({test:"test"})
+	//res.send(ck.API)
+    res.json(res.locals.session)
 })
 
 

@@ -31,7 +31,10 @@ const checkInvite = async (code: string): Promise<boolean> => {
 }
 const updateInvite = async (code: string) => {
     try {
-        const url = `http://localhost:8080/invite/spoil?ID=${code}`
+		const url = `${process.env.HTTPS === '1' ? 'https' : 'http'}://${
+            process.env.WEB_URL
+        }/invite/spoil?ID=${code}`
+        //const url = `http://localhost:8080/invite/spoil?ID=${code}`
 
         const response = await fetch(url, { method: 'POST' })
 
@@ -75,13 +78,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             error: 'Invalid password',
         })
     }
-    const validCode = await checkInvite(code as string)
-    if (typeof code !== 'string' && validCode) {
-        console.log('POOP')
-        return res.status(402).json({
-            error: 'Invalid Invite Code',
-        })
-    }
+    // const validCode = await checkInvite(code as string)
+    // if (typeof code !== 'string' && validCode) {
+    //     console.log('POOP')
+    //     return res.status(402).json({
+    //         error: 'Invalid Invite Code',
+    //     })
+    // }
     try {
         const user = await auth.createUser({
             key: {
@@ -103,8 +106,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             res,
         })
         authRequest.setSession(session)
-        const bool = await updateInvite(code as string)
-        console.log(bool)
+        // const bool = await updateInvite(code as string)
+        // console.log(bool)
         return res.redirect(302, '/') // profile page
     } catch (e:any) {
         // this part depends on the database you're using

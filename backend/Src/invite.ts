@@ -91,4 +91,10 @@ inviteRouter.get('/all', async (req, res) => {
     }
 })
 
+inviteRouter.delete('/delete',async (req,res)=>{
+	const ID = req.query.ID as string
+	await db.delete(invites).where(eq(invites.id, ID))
+    res.sendStatus(200)
+})
+
 export default inviteRouter

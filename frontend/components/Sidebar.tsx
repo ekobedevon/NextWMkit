@@ -16,6 +16,7 @@ import Link from 'next/link'
 import UserIcon from '@/components/svg/userIcon'
 import { useRouter, NextRouter } from 'next/router'
 import Logo from './svg/logo'
+import NightSwitch from './NightSwitch'
 
 const navigation = [
     { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
@@ -181,6 +182,7 @@ const NavOptions = ({
                         />
                         <span className="sr-only">Your profile</span>
                     </Link>
+					<NightSwitch/>
                     <SignOut router={router} />
                 </li>
             </ul>
